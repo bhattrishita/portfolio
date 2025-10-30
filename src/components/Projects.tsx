@@ -135,9 +135,9 @@ const Projects = () => {
           viewport={{ once: true }}
           className="relative"
         >
-          {/* Controlled 2-up carousel */}
+          {/* Controlled carousel with 3 cards per page */}
           {(() => {
-            const pages = Math.ceil(projects.length / 2)
+            const pages = Math.ceil(projects.length / 3)
             return null
           })()}
           <Carousel projects={projects} />
@@ -149,7 +149,7 @@ const Projects = () => {
 
 export default Projects
 
-// Carousel component (2-up, prev/next, auto-advance every 10s)
+// Carousel component (3 cards per page, infinite continuous scroll, prev/next, auto-advance every 10s)
 type Project = {
   title: string
   description: string
@@ -163,53 +163,85 @@ type Project = {
 function Carousel({ projects }: { projects: Project[] }) {
   const pages = useMemo(() => {
     const chunks: Project[][] = []
-    for (let i = 0; i < projects.length; i += 2) {
-      chunks.push(projects.slice(i, i + 2))
+    for (let i = 0; i < projects.length; i += 3) {
+      chunks.push(projects.slice(i, i + 3))
+    }
+    // For infinite scroll: add duplicate of last page at start, and first page at end
+    if (chunks.length > 1) {
+      return [chunks[chunks.length - 1], ...chunks, chunks[0]]
     }
     return chunks
   }, [projects])
 
-  const [page, setPage] = useState(0)
+  const [page, setPage] = useState(1) // Start at index 1 (real first page)
+  const [isTransitioning, setIsTransitioning] = useState(true)
+
+  // Get real page count (without duplicates)
+  const realPagesCount = useMemo(() => {
+    const chunks: Project[][] = []
+    for (let i = 0; i < projects.length; i += 3) {
+      chunks.push(projects.slice(i, i + 3))
+    }
+    return chunks.length
+  }, [projects])
 
   useEffect(() => {
     const id = setInterval(() => {
-      setPage((p) => (p + 1) % pages.length)
+      setPage((p) => {
+        const next = p + 1
+        if (next >= pages.length - 1) {
+          // If we're about to reach the duplicate first page, instantly jump to real first
+          setTimeout(() => {
+            setIsTransitioning(false)
+            setPage(1)
+            setTimeout(() => setIsTransitioning(true), 50)
+          }, 1200)
+          return next
+        }
+        return next
+      })
     }, 10000)
     return () => clearInterval(id)
-  }, [pages.length])
+  }, [pages.length, realPagesCount])
 
-  const prev = () => setPage((p) => (p - 1 + pages.length) % pages.length)
-  const next = () => setPage((p) => (p + 1) % pages.length)
+  const prev = () => {
+    const newPage = page - 1
+    if (newPage <= 0) {
+      // If going backwards from real first, jump to real last
+      setIsTransitioning(false)
+      setPage(realPagesCount)
+      setTimeout(() => setIsTransitioning(true), 50)
+      return
+    }
+    setPage(newPage)
+  }
+
+  const next = () => {
+    const newPage = page + 1
+    if (newPage >= pages.length - 1) {
+      // If we're about to reach the duplicate first page, instantly jump to real first
+      setIsTransitioning(false)
+      setPage(newPage)
+      setTimeout(() => {
+        setPage(1)
+        setTimeout(() => setIsTransitioning(true), 50)
+      }, 1200)
+      return
+    }
+    setPage(newPage)
+  }
 
   return (
     <div className="relative">
       <div className="overflow-hidden">
         <div
-          className="flex transition-transform duration-[1200ms] ease-in-out"
+          className={`flex ${isTransitioning ? 'transition-transform duration-[1200ms] ease-in-out' : ''}`}
           style={{ transform: `translateX(-${page * 100}%)` }}
         >
           {pages.map((chunk, chunkIndex) => (
-            <div key={chunkIndex} className="min-w-full grid md:grid-cols-2 gap-5">
+            <div key={chunkIndex} className="min-w-full grid md:grid-cols-3 gap-5">
               {chunk.map((project, index) => (
                 <div key={`${chunkIndex}-${index}`} className="bg-white rounded-2xl shadow-lg overflow-hidden border border-primary-200">
-                  <div className="relative group">
-                    <div className="relative overflow-hidden">
-                      <div className="aspect-[3/2] bg-gradient-to-br from-primary-100 to-secondary-100 flex items-center justify-center">
-                        <div className="text-4xl font-bold gradient-text">
-                          {project.title.split(' ').map(word => word[0]).join('')}
-                        </div>
-                      </div>
-                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <div className="flex space-x-4">
-                          {project.github && (
-                            <a href={project.github} target="_blank" rel="noopener noreferrer" className="p-3 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors duration-200">
-                              <Github size={24} className="text-white" />
-                            </a>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                   <div className="p-5 space-y-3">
                     <div className="flex items-center gap-3">
                       <h3 className="text-xl font-bold text-gray-900">{project.title}</h3>
