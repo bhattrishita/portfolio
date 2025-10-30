@@ -111,7 +111,7 @@ const Projects = () => {
   }
 
   return (
-    <section id="projects" className="section-padding bg-white">
+    <section id="projects" className="section-padding bg-black">
       <div className="max-w-7xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -120,10 +120,10 @@ const Projects = () => {
           viewport={{ once: true }}
           className="text-center mb-10"
         >
-          <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
+          <h2 className="text-3xl lg:text-4xl font-bold text-gray-100 mb-3">
             Featured Projects
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-300 max-w-3xl mx-auto">
             A showcase of my recent work and personal projects that demonstrate my skills and passion for development
           </p>
         </motion.div>
@@ -241,25 +241,25 @@ function Carousel({ projects }: { projects: Project[] }) {
           {pages.map((chunk, chunkIndex) => (
             <div key={chunkIndex} className="min-w-full grid md:grid-cols-3 gap-5">
               {chunk.map((project, index) => (
-                <div key={`${chunkIndex}-${index}`} className="bg-white rounded-2xl shadow-lg overflow-hidden border border-primary-200">
+                <div key={`${chunkIndex}-${index}`} className="bg-zinc-900 rounded-2xl shadow-lg overflow-hidden border border-zinc-800">
                   <div className="p-5 space-y-3">
                     <div className="flex items-center gap-3">
-                      <h3 className="text-xl font-bold text-gray-900">{project.title}</h3>
+                      <h3 className="text-xl font-bold text-gray-100">{project.title}</h3>
                       {project.featured && (
-                        <span className="px-2.5 py-0.5 bg-primary-100 text-primary-800 rounded-full text-xs font-medium">Featured</span>
+                        <span className="px-2.5 py-0.5 bg-primary-900/30 text-primary-300 rounded-full text-xs font-medium">Featured</span>
                       )}
                     </div>
-                    <p className="text-sm text-gray-600 leading-relaxed">{project.description}</p>
+                    <p className="text-sm text-gray-300 leading-relaxed">{project.description}</p>
                     <div className="flex flex-wrap gap-2">
                       {project.technologies.map((tech, techIndex) => (
-                        <span key={techIndex} className="px-2.5 py-0.5 bg-gray-100 text-gray-700 rounded-full text-xs font-medium hover:bg-primary-100 hover:text-primary-700 transition-colors duration-200">
+                        <span key={techIndex} className="px-2.5 py-0.5 bg-zinc-800 text-gray-200 rounded-full text-xs font-medium hover:bg-primary-900/40 hover:text-primary-300 transition-colors duration-200">
                           {tech}
                         </span>
                       ))}
                     </div>
                     {project.github && (
-                      <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 btn-secondary text-sm py-1.5 px-4">
-                        <Github size={16} /> View Source Code
+                      <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm py-1.5 px-4 rounded-md bg-zinc-800 border border-zinc-700 text-gray-200 hover:bg-zinc-700 transition-colors">
+                        <Github size={16} /> View Source
                       </a>
                     )}
                   </div>

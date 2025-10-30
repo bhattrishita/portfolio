@@ -105,23 +105,7 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          viewport={{ once: true }}
-          className="border-t border-gray-800 py-6"
-        >
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-gray-400 text-sm">
-              © {currentYear} Rishita Bhatt. All rights reserved.
-            </p>
-            <p className="text-gray-400 text-sm flex items-center gap-1">
-              Made with <Heart size={16} className="text-red-500" /> using Next.js & Tailwind CSS
-            </p>
-          </div>
-        </motion.div>
+        {/* Bottom Bar removed as requested */}
       </div>
     </footer>
   )

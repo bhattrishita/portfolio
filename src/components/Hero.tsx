@@ -27,9 +27,9 @@ const Hero = () => {
   ]
 
   return (
-    <section id="about" className="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <section id="about" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-black">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary-50 via-white to-secondary-50" />
+      <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 via-black to-zinc-900" />
       
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -50,7 +50,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-5xl lg:text-7xl font-bold text-gray-900 mb-6"
+              className="text-5xl lg:text-7xl font-bold text-gray-100 mb-6"
             >
               Hi, I&apos;m{' '}
               <span className="gradient-text">Rishita</span>
@@ -60,7 +60,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-xl lg:text-2xl text-gray-600 mb-8 leading-relaxed"
+              className="text-xl lg:text-2xl text-gray-300 mb-8 leading-relaxed"
             >
               Software Developer & CSE Master&apos;s Student at{' '}
               <span className="font-semibold text-primary-600">Santa Clara University</span>
@@ -70,7 +70,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="text-lg text-gray-500 mb-12 max-w-2xl"
+              className="text-lg text-gray-300 mb-12 max-w-2xl"
             >
               Builder at the intersection of full‑stack and AI. I craft user‑centric web apps, design reliable backends, and experiment with machine learning to make products smarter. At SCU’s Frugal Innovation Hub, I’m contributing to tools that streamline onboarding and collaboration. Always learning, always shipping.
             </motion.p>
@@ -127,8 +127,8 @@ const Hero = () => {
           >
             <div className="relative">
               <div className="w-80 h-80 lg:w-96 lg:h-96 relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-secondary-400 rounded-[32px] blur-2xl opacity-20" />
-                <div className="relative w-full h-full bg-white rounded-[32px] p-2 shadow-2xl overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-zinc-700 to-zinc-800 rounded-[32px] blur-2xl opacity-20" />
+                <div className="relative w-full h-full bg-zinc-900 rounded-[32px] p-2 shadow-2xl overflow-hidden">
                   <img src="/profile.png" alt="Rishita Bhatt" className="w-full h-full object-cover rounded-[24px]" />
                 </div>
               </div>
@@ -146,7 +146,7 @@ const Hero = () => {
       >
         <button
           onClick={() => scrollToSection('experience')}
-          className="text-gray-400 hover:text-primary-600 transition-colors duration-200"
+          className="text-gray-400 hover:text-primary-400 transition-colors duration-200"
         >
           <ChevronDown size={32} className="animate-bounce" />
         </button>

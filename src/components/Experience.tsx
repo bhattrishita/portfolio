@@ -93,7 +93,7 @@ const Experience = () => {
   }, [experiences])
 
   return (
-    <section id="experience" className="section-padding bg-gray-50">
+    <section id="experience" className="section-padding bg-black">
       <div className="container-custom">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -102,10 +102,10 @@ const Experience = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl lg:text-5xl font-bold text-gray-100 mb-4">
             Experience
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             My professional journey in software development and academic pursuits
           </p>
         </motion.div>
@@ -113,7 +113,7 @@ const Experience = () => {
         {/* Horizontal Timeline */}
         <div className="relative mx-auto max-w-6xl py-16">
           {/* Timeline rail centered */}
-          <div className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 h-1.5 bg-gradient-to-r from-secondary-200 via-primary-300 to-secondary-200 rounded-full" />
+          <div className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 h-1.5 bg-gradient-to-r from-zinc-700 via-zinc-600 to-zinc-700 rounded-full" />
 
           <div className="relative grid grid-cols-2 md:grid-cols-4 gap-8">
             {sortedExperiences.map((exp, index) => {
@@ -131,16 +131,16 @@ const Experience = () => {
                     onMouseLeave={() => setHoveredIndex(null)}
                     className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 cursor-pointer"
                   >
-                    <div className="w-7 h-7 rounded-full border-4 border-white bg-primary-600 shadow-lg ring-2 ring-primary-200 transition-transform duration-200 hover:scale-110">
-                      <span className="pointer-events-none absolute inset-0 rounded-full animate-ping bg-primary-300 opacity-30" />
+                    <div className="w-7 h-7 rounded-full border-4 border-black bg-primary-500 shadow-lg ring-2 ring-primary-900/40 transition-transform duration-200 hover:scale-110">
+                      <span className="pointer-events-none absolute inset-0 rounded-full animate-ping bg-primary-800 opacity-30" />
                     </div>
                   </div>
 
                   {/* Label above/below */}
                   <div className={`absolute left-1/2 -translate-x-1/2 ${isTop ? 'top-0 -translate-y-full pb-4' : 'bottom-0 translate-y-full pt-4'} text-center max-w-[200px]`}>
-                    <div className="text-base font-bold text-primary-600 mb-1">{year}</div>
-                    <div className="text-sm font-semibold text-gray-900 mb-1 line-clamp-1">{exp.company}</div>
-                    <div className="text-xs text-gray-600 line-clamp-2">{exp.title}</div>
+                    <div className="text-base font-bold text-primary-300 mb-1">{year}</div>
+                    <div className="text-sm font-semibold text-gray-100 mb-1 line-clamp-1">{exp.company}</div>
+                    <div className="text-xs text-gray-300 line-clamp-2">{exp.title}</div>
                   </div>
                 </div>
               )
@@ -153,7 +153,7 @@ const Experience = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
               onMouseEnter={() => setHoveredIndex(hoveredIndex)}
               onMouseLeave={() => setHoveredIndex(null)}
               onClick={() => setHoveredIndex(null)}
@@ -163,39 +163,39 @@ const Experience = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
                 transition={{ duration: 0.3 }}
-                className="relative bg-white max-w-3xl w-full mx-4 rounded-2xl shadow-2xl border border-primary-200 max-h-[85vh] overflow-y-auto"
+                className="relative bg-zinc-900 max-w-3xl w-full mx-4 rounded-2xl shadow-2xl border border-zinc-800 max-h-[85vh] overflow-y-auto"
                 onClick={(e) => e.stopPropagation()}
               >
                 <button
                   onClick={() => setHoveredIndex(null)}
-                  className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white border border-primary-200 flex items-center justify-center shadow-lg hover:bg-primary-50 hover:border-primary-300 transition-colors duration-200 z-10"
+                  className="absolute top-4 right-4 w-10 h-10 rounded-full bg-zinc-900 border border-zinc-700 flex items-center justify-center shadow-lg hover:bg-zinc-800 transition-colors duration-200 z-10"
                   aria-label="Close"
                 >
                   <X size={18} className="text-gray-600" />
                 </button>
                 <div className="p-8">
                   <div className="flex items-start justify-between mb-4 pr-8">
-                    <h3 className="text-2xl font-bold text-gray-900">{sortedExperiences[hoveredIndex].title}</h3>
+                    <h3 className="text-2xl font-bold text-gray-100">{sortedExperiences[hoveredIndex].title}</h3>
                     <span className={`px-3 py-1 rounded-full text-sm font-medium border ${getTypeColor(sortedExperiences[hoveredIndex].type)} whitespace-nowrap ml-4`}>
                       {sortedExperiences[hoveredIndex].type.charAt(0).toUpperCase() + sortedExperiences[hoveredIndex].type.slice(1)}
                     </span>
                   </div>
-                  <div className="flex items-center text-gray-600 mb-3">
+                  <div className="flex items-center text-gray-300 mb-3">
                     <Building2 size={18} className="mr-2 text-primary-600" />
                     <span className="font-semibold">{sortedExperiences[hoveredIndex].company}</span>
                   </div>
-                  <div className="flex items-center text-gray-500 mb-6">
+                  <div className="flex items-center text-gray-400 mb-6">
                     <MapPin size={16} className="mr-2 text-primary-500" />
                     <span className="mr-6">{sortedExperiences[hoveredIndex].location}</span>
                     <Calendar size={16} className="mr-2 text-primary-500" />
                     <span>{sortedExperiences[hoveredIndex].period}</span>
                   </div>
-                  <p className="text-gray-600 mb-6 leading-relaxed">{sortedExperiences[hoveredIndex].description}</p>
+                  <p className="text-gray-300 mb-6 leading-relaxed">{sortedExperiences[hoveredIndex].description}</p>
                   <div>
-                    <h4 className="text-sm font-semibold text-gray-700 mb-3">Technologies:</h4>
+                    <h4 className="text-sm font-semibold text-gray-200 mb-3">Technologies:</h4>
                     <div className="flex flex-wrap gap-2">
                       {sortedExperiences[hoveredIndex].technologies.map((tech, techIndex) => (
-                        <span key={techIndex} className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-primary-50 hover:text-primary-700 transition-colors duration-200">
+                        <span key={techIndex} className="px-3 py-1 bg-zinc-800 text-gray-200 rounded-full text-sm font-medium hover:bg-primary-900/40 hover:text-primary-300 transition-colors duration-200">
                           {tech}
                         </span>
                       ))}
