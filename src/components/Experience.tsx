@@ -92,6 +92,20 @@ const Experience = () => {
     return withYear.sort((a, b) => b.__year - a.__year)
   }, [experiences])
 
+  // Accent colors for timeline dots (dark-theme friendly)
+  const accentColors = [
+    { dot: 'bg-emerald-400', ring: 'ring-emerald-900/40' },
+    { dot: 'bg-sky-400', ring: 'ring-sky-900/40' },
+    { dot: 'bg-amber-400', ring: 'ring-amber-900/40' },
+    { dot: 'bg-rose-400', ring: 'ring-rose-900/40' },
+    { dot: 'bg-violet-400', ring: 'ring-violet-900/40' },
+  ]
+
+  const extractMonthYear = (period: string): string => {
+    const match = period.match(/^[A-Za-z]+\s\d{4}/)
+    return match ? match[0] : (period.match(/\d{4}/)?.[0] ?? '')
+  }
+
   return (
     <section id="experience" className="section-padding bg-black">
       <div className="container-custom">
@@ -113,17 +127,19 @@ const Experience = () => {
         {/* Horizontal Timeline */}
         <div className="relative mx-auto max-w-6xl py-16">
           {/* Timeline rail centered */}
-          <div className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 h-1.5 bg-gradient-to-r from-zinc-700 via-zinc-600 to-zinc-700 rounded-full" />
+          <div className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 h-[2px] bg-zinc-700 rounded-full" />
 
           <div className="relative grid grid-cols-2 md:grid-cols-4 gap-8">
             {sortedExperiences.map((exp, index) => {
               const isTop = index % 2 === 0
               const year = exp.period.match(/\d{4}/)?.[0] || ''
+              const monthYear = extractMonthYear(exp.period)
+              const accents = accentColors[index % accentColors.length]
               
               return (
                 <div key={index} className="relative h-48">
                   {/* Connector line from rail to label */}
-                  <div className={`absolute left-1/2 w-0.5 bg-secondary-300 ${isTop ? 'top-0 bottom-1/2' : 'top-1/2 bottom-0'}`} />
+                  <div className={`absolute left-1/2 w-px bg-zinc-700 ${isTop ? 'top-0 bottom-1/2' : 'top-1/2 bottom-0'}`} />
 
                   {/* Timeline dot */}
                   <div
@@ -131,14 +147,14 @@ const Experience = () => {
                     onMouseLeave={() => setHoveredIndex(null)}
                     className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 cursor-pointer"
                   >
-                    <div className="w-7 h-7 rounded-full border-4 border-black bg-primary-500 shadow-lg ring-2 ring-primary-900/40 transition-transform duration-200 hover:scale-110">
-                      <span className="pointer-events-none absolute inset-0 rounded-full animate-ping bg-primary-800 opacity-30" />
+                    <div className={`w-3.5 h-3.5 rounded-full border-4 border-black ${accents.dot} shadow-lg ring-2 ${accents.ring} transition-transform duration-200 hover:scale-110`}>
+                      {/* subtle glow handled by ring */}
                     </div>
                   </div>
 
                   {/* Label above/below */}
                   <div className={`absolute left-1/2 -translate-x-1/2 ${isTop ? 'top-0 -translate-y-full pb-4' : 'bottom-0 translate-y-full pt-4'} text-center max-w-[200px]`}>
-                    <div className="text-base font-bold text-primary-300 mb-1">{year}</div>
+                    <div className="text-sm font-semibold text-zinc-400 mb-1">{monthYear}</div>
                     <div className="text-sm font-semibold text-gray-100 mb-1 line-clamp-1">{exp.company}</div>
                     <div className="text-xs text-gray-300 line-clamp-2">{exp.title}</div>
                   </div>
@@ -149,7 +165,7 @@ const Experience = () => {
 
           {/* Popup Modal */}
           {hoveredIndex !== null && (
-            <motion.div
+        <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -178,8 +194,8 @@ const Experience = () => {
                     <h3 className="text-2xl font-bold text-gray-100">{sortedExperiences[hoveredIndex].title}</h3>
                     <span className={`px-3 py-1 rounded-full text-sm font-medium border ${getTypeColor(sortedExperiences[hoveredIndex].type)} whitespace-nowrap ml-4`}>
                       {sortedExperiences[hoveredIndex].type.charAt(0).toUpperCase() + sortedExperiences[hoveredIndex].type.slice(1)}
-                    </span>
-                  </div>
+                      </span>
+                    </div>
                   <div className="flex items-center text-gray-300 mb-3">
                     <Building2 size={18} className="mr-2 text-primary-600" />
                     <span className="font-semibold">{sortedExperiences[hoveredIndex].company}</span>
@@ -205,7 +221,7 @@ const Experience = () => {
               </motion.div>
             </motion.div>
           )}
-        </div>
+          </div>
 
         {/* Skills Section */}
         <motion.div
@@ -221,7 +237,7 @@ const Experience = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[ 
+            {[
               { title: 'Languages & Frameworks', items: ['Python', 'Java', 'C', 'C#', 'SQL', 'TypeScript', 'JavaScript', 'Angular', 'React (Next.js)', 'Node.js', 'Django', 'Spring Boot'] },
               { title: 'Backend, APIs & DevOps', items: ['REST & GraphQL APIs', 'Microservices', 'Docker', 'CI/CD', 'Kubernetes (K8s)'] },
               { title: 'Databases & Cloud', items: ['MongoDB', 'PostgreSQL', 'MySQL', 'Oracle', 'Couchbase', 'AWS (S3)'] },
@@ -235,15 +251,17 @@ const Experience = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300"
+                className="rounded-2xl p-[1px] bg-gradient-to-r from-primary-500 via-purple-500 to-pink-500 overflow-hidden"
               >
-                <h4 className="font-semibold text-gray-900 mb-4">{group.title}</h4>
-                <div className="flex flex-wrap gap-2">
-                  {group.items.map((item, i) => (
-                    <span key={i} className="px-3 py-1 bg-gray-50 text-gray-700 rounded-full text-sm font-medium hover:bg-primary-50 hover:text-primary-700 transition-colors duration-200">
-                      {item}
-                    </span>
-                  ))}
+                <div className="bg-zinc-900 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 h-full">
+                  <h4 className="font-semibold text-gray-100 mb-4">{group.title}</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {group.items.map((item, i) => (
+                      <span key={i} className="px-3 py-1 bg-zinc-800 text-gray-200 rounded-full text-sm font-medium hover:bg-primary-900/40 hover:text-primary-300 transition-colors duration-200">
+                        {item}
+                      </span>
+                    ))}
+                    </div>
                 </div>
               </motion.div>
             ))}

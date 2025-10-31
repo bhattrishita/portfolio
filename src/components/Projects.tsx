@@ -7,13 +7,58 @@ import { useEffect, useMemo, useState } from 'react'
 const Projects = () => {
   const projects = [
     {
-      title: 'Frugal Innovation Hub - Employee Onboarding Tool',
-      description: 'A comprehensive project management tool built with Next.js, MongoDB, and Tailwind CSS that helps new employees access all necessary details about company projects and ongoing initiatives. Features include centralized information access, streamlined onboarding processes, and a bug-tracking system with Node.js and MongoDB for efficient project management and team transparency.',
-      image: '/fih-project.png',
-      technologies: ['Next.js', 'MongoDB', 'Tailwind CSS', 'Node.js', 'Project Management', 'Bug Tracking'],
+      title: 'Billing and Inventory Management System',
+      description: 'A full-stack billing and inventory management system using C# and MySQL to streamline stock control, billing, and inventory tracking for around 100 products and 20 daily transactions. Features include product/category CRUD operations, tax calculations, billing reports, advanced search/filter capabilities, and secure user authentication with role-based access control, supporting 5-10 concurrent users.',
+      image: '/billing_Inventory.png',
+      technologies: ['C#', 'MySQL', 'Full-Stack', 'CRUD Operations', 'Role-Based Access Control', 'Inventory Management'],
+      github: 'https://github.com/bhattrishita/billing-and-inventory-management-system',
+      live: '',
+      featured: true
+    },
+    {
+      title: 'Drive to S3',
+      description: 'Web app that enables Auth0 login and connects Google Drive, Notion, and Slack via OAuth 2.0. Backend (Node.js/Express) manages tokens and APIs; frontend (Next.js/Tailwind) displays authenticated documents. Fetched data is uploaded securely to AWS S3 for centralized management.',
+      image: '/gdrive-aws.png',
+      technologies: ['Next.js', 'Node.js', 'TypeScript', 'Tailwind CSS', 'MongoDB', 'Auth0', 'AWS S3', 'OAuth 2.0'],
+      github: 'https://github.com/bhattrishita/panora-googledrive-integration',
+      live: '',
+      featured: true
+    },
+    {
+      title: 'NVDA-NIM (RAG App)',
+      description: 'Interactive Streamlit app demonstrating Retrieval-Augmented Generation using NVIDIA\'s NIM APIs. Users upload PDFs; content is embedded with LangChain + FAISS and queried via NVIDIA-hosted LLM for document-aware answers.',
+      image: '/rag-nvda.png',
+      technologies: ['Streamlit', 'LangChain', 'FAISS', 'NVIDIA NIM', 'Python', 'LLM'],
       github: '',
       live: '',
       featured: true
+    },
+    {
+      title: 'Expense Tracker',
+      description: 'Splitwise-style expense tracker with a Java backend implementing 18 design patterns for scalability. Supports auth, session management, group expenses, multiple split methods (equal/percentage/exact), real-time balances, and undo.',
+      image: '/expense-tracker.png',
+      technologies: ['Java', 'Design Patterns', 'Backend', 'OOP'],
+      github: 'https://github.com/bhattrishita/designPatterns',
+      live: '',
+      featured: false
+    },
+    {
+      title: 'InsightGridAI',
+      description: 'AI-powered business copilot that turns raw financial/operational data into simulations and predictive insights. Built on AWS serverless (Athena, S3, Bedrock) with custom Python ML for natural-language queries, forecasting, and what-if scenarios.',
+      image: '/insightgridai.png',
+      technologies: ['AWS Athena', 'AWS S3', 'AWS Bedrock', 'Python', 'Serverless', 'Machine Learning'],
+      github: 'https://github.com/khushiatcode/InsightGridAI',
+      live: '',
+      featured: false
+    },
+    {
+      title: 'mySchedules',
+      description: 'Comprehensive shift management system using Angular, Django, and PostgreSQL to help part-time workers and managers efficiently manage and track shifts. Supports pickups, swaps, releases, and approvals, reducing conflicts. Email notifications integrated via Django backend to inform users of updates in real time.',
+      image: '/mySchedules.png',
+      technologies: ['Angular', 'Django', 'PostgreSQL', 'REST API', 'Email Service'],
+      github: 'https://github.com/sahajpatel008/mySchedules',
+      live: '',
+      featured: false
     },
     {
       title: 'Beyond Pixels',
@@ -22,31 +67,13 @@ const Projects = () => {
       technologies: ['JavaScript', 'Browser Extension', 'Google Gemini API', 'Node.js', 'Accessibility', 'AI/ML'],
       github: 'https://github.com/rebeccad71011/BeyondPixels',
       live: '',
-      featured: true
-    },
-    {
-      title: 'mySchedules',
-      description: 'A shift management system built using Angular for frontend, Django for backend, and PostgreSQL for database. Designed to help part-time workers and managers manage their shift timings and track worked shifts. Features include shift pickup, real-time shift swaps, releases, and approval using Angular\'s dynamic UI and Django\'s REST APIs, reducing scheduling conflicts by 30%. Includes calendar views and email notifications for enhanced user experience.',
-      image: '/mySchedules.png',
-      technologies: ['Angular', 'Django', 'PostgreSQL', 'REST APIs', 'Email Notifications', 'Calendar Integration'],
-      github: 'https://github.com/sahajpatel008/mySchedules',
-      live: '',
-      featured: true
-    },
-    {
-      title: 'Billing and Inventory Management System',
-      description: 'A full-stack billing and inventory management system using C# and MySQL to streamline stock control, billing, and inventory tracking for around 100 products and 20 daily transactions. Features include product/category CRUD operations, tax calculations, billing reports, advanced search/filter capabilities, and secure user authentication with role-based access control, supporting 5-10 concurrent users.',
-      image: '/billing_Inventory.png',
-      technologies: ['C#', 'MySQL', 'Full-Stack', 'CRUD Operations', 'Role-Based Access Control', 'Inventory Management'],
-      github: 'https://github.com/bhattrishita/billing-and-inventory-management-system',
-      live: '',
       featured: false
     },
     {
-      title: 'Titanic - Supervised ML Pipeline',
-      description: 'A supervised machine learning pipeline built to predict Titanic passenger survival using features like age, gender, class, and embarkation port. Implemented data cleaning, feature engineering, and trained three models: Logistic Regression, SVM,<|uniquepaddingtoken428|> Random Forest. Used GridSearchCV for hyperparameter tuning and achieved 94% ROC-AUC with Random Forest, applying stratified cross-validation to mitigate overfitting.',
+      title: 'Titanic – Supervised ML',
+      description: 'Built an ML pipeline to predict Titanic passenger survival using Logistic Regression, SVM, and Random Forest. Included preprocessing, encoding, and hyperparameter tuning with GridSearchCV; achieved strong ROC-AUC with stratified cross-validation and validated using precision-recall and confusion matrices.',
       image: '/titanic-ml.png',
-      technologies: ['Python', 'scikit-learn', 'Machine Learning', 'Data Preprocessing', 'Feature Engineering', 'Model Evaluation'],
+      technologies: ['Python', 'scikit-learn', 'Pandas', 'NumPy', 'Machine Learning'],
       github: '',
       live: '',
       featured: false
@@ -61,28 +88,10 @@ const Projects = () => {
       featured: false
     },
     {
-      title: 'Google Drive to AWS Migration Tool',
-      description: 'A utility tool that automates the migration of files from Google Drive to AWS S3, ensuring efficient, secure, and reliable cloud storage transfer.',
-      image: '/gdrive-aws.png',
-      technologies: ['Python', 'AWS S3', 'Google Drive API', 'Automation'],
-      github: '',
-      live: '',
-      featured: false
-    },
-    {
-      title: 'E-commerce Platform (Dots & Coms)',
-      description: 'High-performance e-commerce platform with authentication, session management, and responsive design, reducing login drop-offs by 25%.',
-      image: '/ecommerce-dots.png',
-      technologies: ['Node.js', 'MongoDB', 'Auth0', 'Bootstrap', 'jQuery'],
-      github: '',
-      live: '',
-      featured: false
-    },
-    {
-      title: 'Project Management Dashboard',
-      description: 'Real-time task tracking system with custom data visualization charts including sunburst and Kanban views, improving task visibility for 50+ users.',
-      image: '/pm-dashboard.png',
-      technologies: ['Angular', 'TypeScript', 'Data Visualization', 'REST APIs'],
+      title: 'Frugal Innovation Hub',
+      description: 'Developed a tool to assist new employees in accessing detailed information about projects they will be involved in and other ongoing projects. Built with Next.js, MongoDB, and Tailwind CSS to centralize onboarding information. Added a Node.js + MongoDB bug-tracking feature to record, describe, and monitor bugs, improving transparency and collaboration.',
+      image: '/fih-project.png',
+      technologies: ['Next.js', 'MongoDB', 'Tailwind CSS', 'Node.js'],
       github: '',
       live: '',
       featured: false
@@ -135,14 +144,9 @@ const Projects = () => {
           viewport={{ once: true }}
           className="relative"
         >
-          {/* Controlled carousel with 3 cards per page */}
-          {(() => {
-            const pages = Math.ceil(projects.length / 3)
-            return null
-          })()}
           <Carousel projects={projects} />
         </motion.div>
-      </div>
+                    </div>
     </section>
   )
 }
@@ -161,116 +165,126 @@ type Project = {
 }
 
 function Carousel({ projects }: { projects: Project[] }) {
-  const pages = useMemo(() => {
-    const chunks: Project[][] = []
-    for (let i = 0; i < projects.length; i += 3) {
-      chunks.push(projects.slice(i, i + 3))
-    }
-    // For infinite scroll: add duplicate of last page at start, and first page at end
-    if (chunks.length > 1) {
-      return [chunks[chunks.length - 1], ...chunks, chunks[0]]
-    }
-    return chunks
+  // For infinite scroll: prepend last 3 projects, append first 3 projects
+  const infiniteProjects = useMemo(() => {
+    if (projects.length <= 3) return projects
+    const lastThree = projects.slice(-3)
+    const firstThree = projects.slice(0, 3)
+    return [...lastThree, ...projects, ...firstThree]
   }, [projects])
 
-  const [page, setPage] = useState(1) // Start at index 1 (real first page)
+  const [currentIndex, setCurrentIndex] = useState(3) // Start at real first project (index 3, after the prepended last 3)
   const [isTransitioning, setIsTransitioning] = useState(true)
 
-  // Get real page count (without duplicates)
-  const realPagesCount = useMemo(() => {
-    const chunks: Project[][] = []
-    for (let i = 0; i < projects.length; i += 3) {
-      chunks.push(projects.slice(i, i + 3))
-    }
-    return chunks.length
-  }, [projects])
+  // Calculate how much to translate (each card is 33.333% width to show 3 at a time)
+  const translateX = (currentIndex * 100) / 3
 
-  useEffect(() => {
-    const id = setInterval(() => {
-      setPage((p) => {
-        const next = p + 1
-        if (next >= pages.length - 1) {
-          // If we're about to reach the duplicate first page, instantly jump to real first
-          setTimeout(() => {
-            setIsTransitioning(false)
-            setPage(1)
-            setTimeout(() => setIsTransitioning(true), 50)
-          }, 1200)
-          return next
-        }
-        return next
-      })
-    }, 10000)
-    return () => clearInterval(id)
-  }, [pages.length, realPagesCount])
-
-  const prev = () => {
-    const newPage = page - 1
-    if (newPage <= 0) {
-      // If going backwards from real first, jump to real last
-      setIsTransitioning(false)
-      setPage(realPagesCount)
-      setTimeout(() => setIsTransitioning(true), 50)
-      return
-    }
-    setPage(newPage)
-  }
-
-  const next = () => {
-    const newPage = page + 1
-    if (newPage >= pages.length - 1) {
-      // If we're about to reach the duplicate first page, instantly jump to real first
-      setIsTransitioning(false)
-      setPage(newPage)
+  const handleNext = () => {
+    if (projects.length <= 3) return
+    
+    const nextIndex = currentIndex + 1
+    
+    // If we're about to reach the appended first 3 projects, loop back
+    if (nextIndex >= infiniteProjects.length - 3) {
+      setCurrentIndex(nextIndex)
+      // After transition, instantly jump to real first (index 3)
       setTimeout(() => {
-        setPage(1)
+        setIsTransitioning(false)
+        setCurrentIndex(3)
         setTimeout(() => setIsTransitioning(true), 50)
-      }, 1200)
-      return
+      }, 600)
+    } else {
+      setCurrentIndex(nextIndex)
     }
-    setPage(newPage)
   }
+
+  const handlePrev = () => {
+    if (projects.length <= 3) return
+    
+    const prevIndex = currentIndex - 1
+    
+    // If we're at the real first, jump to before the prepended last 3 (no transition)
+    if (prevIndex < 3) {
+      setIsTransitioning(false)
+      setCurrentIndex(infiniteProjects.length - 6) // Position before prepended last 3
+      setTimeout(() => {
+        setIsTransitioning(true)
+        setCurrentIndex(infiniteProjects.length - 6)
+      }, 50)
+    } else {
+      setCurrentIndex(prevIndex)
+    }
+  }
+
+  // Auto-advance every 10 seconds
+  useEffect(() => {
+    if (projects.length <= 3) return
+    
+    const interval = setInterval(() => {
+      handleNext()
+    }, 10000)
+
+    return () => clearInterval(interval)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentIndex])
 
   return (
     <div className="relative">
       <div className="overflow-hidden">
         <div
-          className={`flex ${isTransitioning ? 'transition-transform duration-[1200ms] ease-in-out' : ''}`}
-          style={{ transform: `translateX(-${page * 100}%)` }}
+          className={`flex flex-nowrap ${isTransitioning ? 'transition-transform duration-[600ms] ease-in-out' : ''}`}
+          style={{ transform: `translateX(-${translateX}%)` }}
         >
-          {pages.map((chunk, chunkIndex) => (
-            <div key={chunkIndex} className="min-w-full grid md:grid-cols-3 gap-5">
-              {chunk.map((project, index) => (
-                <div key={`${chunkIndex}-${index}`} className="bg-zinc-900 rounded-2xl shadow-lg overflow-hidden border border-zinc-800">
-                  <div className="p-5 space-y-3">
-                    <div className="flex items-center gap-3">
-                      <h3 className="text-xl font-bold text-gray-100">{project.title}</h3>
-                      {project.featured && (
-                        <span className="px-2.5 py-0.5 bg-primary-900/30 text-primary-300 rounded-full text-xs font-medium">Featured</span>
-                      )}
-                    </div>
-                    <p className="text-sm text-gray-300 leading-relaxed">{project.description}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.technologies.map((tech, techIndex) => (
-                        <span key={techIndex} className="px-2.5 py-0.5 bg-zinc-800 text-gray-200 rounded-full text-xs font-medium hover:bg-primary-900/40 hover:text-primary-300 transition-colors duration-200">
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                    {project.github && (
-                      <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm py-1.5 px-4 rounded-md bg-zinc-800 border border-zinc-700 text-gray-200 hover:bg-zinc-700 transition-colors">
-                        <Github size={16} /> View Source
-                      </a>
-                    )}
+          {infiniteProjects.map((project, index) => (
+            <div key={index} className="w-full md:w-1/3 flex-shrink-0 px-2">
+              <div className="relative bg-zinc-900 rounded-2xl shadow-lg overflow-hidden border border-zinc-800 group h-full">
+                <div className="p-5 space-y-3">
+                  <h3 className="text-xl font-bold text-gray-100">{project.title}</h3>
+                  <p className="text-sm text-gray-300 leading-relaxed">{project.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.technologies.map((tech, techIndex) => (
+                      <span key={techIndex} className="px-2.5 py-0.5 bg-zinc-800 text-gray-200 rounded-full text-xs font-medium hover:bg-primary-900/40 hover:text-primary-300 transition-colors duration-200">
+                        {tech}
+                      </span>
+                    ))}
                   </div>
                 </div>
-              ))}
+                {/* GitHub Link Overlay on Hover */}
+                {project.github && (
+                  <div className="absolute inset-0 bg-black/20 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded-2xl">
+                    <a 
+                      href={project.github} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/90 hover:bg-white text-gray-900 transition-all duration-200 shadow-lg hover:scale-110"
+                    >
+                      <Github size={24} />
+                    </a>
+                  </div>
+                )}
+              </div>
             </div>
           ))}
         </div>
       </div>
-      <button onClick={prev} className="absolute -left-3 top-1/2 -translate-y-1/2 bg-white border border-primary-200 rounded-full w-10 h-10 shadow hover:bg-primary-50 text-primary-600 hover:text-primary-700 flex items-center justify-center text-xl font-bold transition-colors duration-200">‹</button>
-      <button onClick={next} className="absolute -right-3 top-1/2 -translate-y-1/2 bg-white border border-primary-200 rounded-full w-10 h-10 shadow hover:bg-primary-50 text-primary-600 hover:text-primary-700 flex items-center justify-center text-xl font-bold transition-colors duration-200">›</button>
+      {projects.length > 3 && (
+        <>
+          <button 
+            onClick={handlePrev} 
+            className="absolute -left-3 top-1/2 -translate-y-1/2 bg-zinc-900 border border-zinc-700 rounded-full w-10 h-10 shadow-lg hover:bg-zinc-800 hover:border-zinc-600 text-gray-300 hover:text-primary-400 flex items-center justify-center text-xl font-bold transition-colors duration-200 z-10"
+            aria-label="Previous"
+          >
+            ‹
+          </button>
+          <button 
+            onClick={handleNext} 
+            className="absolute -right-3 top-1/2 -translate-y-1/2 bg-zinc-900 border border-zinc-700 rounded-full w-10 h-10 shadow-lg hover:bg-zinc-800 hover:border-zinc-600 text-gray-300 hover:text-primary-400 flex items-center justify-center text-xl font-bold transition-colors duration-200 z-10"
+            aria-label="Next"
+          >
+            ›
+          </button>
+        </>
+      )}
     </div>
   )
 }

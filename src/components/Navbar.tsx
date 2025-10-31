@@ -30,7 +30,7 @@ const Navbar = () => {
 
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      scrolled ? 'bg-white/90 backdrop-blur-md shadow-lg' : 'bg-transparent'
+      scrolled ? 'bg-black/70 backdrop-blur-md border-b border-zinc-800' : 'bg-transparent'
     }`}>
       <div className="container-custom">
         <div className="flex items-center justify-between h-16 px-4">
@@ -51,7 +51,7 @@ const Navbar = () => {
                 <button
                   key={item.name}
                   onClick={() => handleNavClick(item.href)}
-                  className="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-200"
+                  className="text-gray-200 hover:text-primary-300 px-3 py-2 text-sm font-medium transition-colors duration-200"
                 >
                   {item.name}
                 </button>
@@ -75,7 +75,7 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-700 hover:text-primary-600 focus:outline-none focus:text-primary-600"
+              className="text-gray-200 hover:text-primary-300 focus:outline-none focus:text-primary-300"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -85,12 +85,12 @@ const Navbar = () => {
         {/* Mobile Navigation */}
         {isOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/95 backdrop-blur-md border-t">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-black/80 backdrop-blur-md border-t border-zinc-800">
               {navItems.map((item) => (
                 <button
                   key={item.name}
                   onClick={() => handleNavClick(item.href)}
-                  className="text-gray-700 hover:text-primary-600 block px-3 py-2 text-base font-medium w-full text-left transition-colors duration-200"
+                  className="text-gray-200 hover:text-primary-300 block px-3 py-2 text-base font-medium w-full text-left transition-colors duration-200"
                 >
                   {item.name}
                 </button>
@@ -99,7 +99,7 @@ const Navbar = () => {
                 href="/Rishita_Bhatt_Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary block text-center mx-3 mt-4"
+                className="block text-center mx-3 mt-4 rounded-md bg-zinc-900 border border-zinc-700 text-gray-200 hover:bg-zinc-800 transition-colors py-2"
               >
                 Resume
               </a>
