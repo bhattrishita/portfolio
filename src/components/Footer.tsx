@@ -28,7 +28,7 @@ const Footer = () => {
   ]
 
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="text-white" style={{ backgroundColor: 'rgb(17 17 17)' }}>
       <div className="container-custom">
         <div className="py-12">
           <div className="grid md:grid-cols-3 gap-8">
@@ -40,8 +40,8 @@ const Footer = () => {
               viewport={{ once: true }}
               className="space-y-4"
             >
-              <h3 className="text-2xl font-bold gradient-text">Rishita Bhatt</h3>
-              <p className="text-gray-400 leading-relaxed">
+              <h3 className="text-2xl font-bold text-gray-100">Rishita Bhatt</h3>
+              <p className="text-gray-300 leading-relaxed">
                 Software Developer and CSE Master&apos;s student passionate about creating innovative web applications and solving complex problems.
               </p>
             </motion.div>
@@ -54,7 +54,7 @@ const Footer = () => {
               viewport={{ once: true }}
               className="space-y-4"
             >
-              <h4 className="text-lg font-semibold">Quick Links</h4>
+              <h4 className="text-lg font-semibold text-gray-100">Quick Links</h4>
               <ul className="space-y-2">
                 {[
                   { name: 'About', href: '#about' },
@@ -65,7 +65,7 @@ const Footer = () => {
                   <li key={link.name}>
                     <a
                       href={link.href}
-                      className="text-gray-400 hover:text-white transition-colors duration-200"
+                      className="text-gray-300 hover:text-white transition-colors duration-200"
                     >
                       {link.name}
                     </a>
@@ -82,10 +82,10 @@ const Footer = () => {
               viewport={{ once: true }}
               className="space-y-4"
             >
-              <h4 className="text-lg font-semibold">Get In Touch</h4>
+              <h4 className="text-lg font-semibold text-gray-100">Get In Touch</h4>
               <div className="space-y-2">
-                <p className="text-gray-400">Santa Clara, CA</p>
-                <p className="text-gray-400">rishitabhatt18@gmail.com</p>
+                <p className="text-gray-300">Santa Clara, CA</p>
+                <p className="text-gray-300">rishitabhatt18@gmail.com</p>
                 <div className="flex space-x-4 pt-2">
                   {socialLinks.map((link) => (
                     <a
@@ -93,7 +93,7 @@ const Footer = () => {
                       href={link.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`text-gray-400 transition-colors duration-200 ${link.color}`}
+                      className="text-gray-300 hover:text-primary-400 transition-colors duration-200"
                       aria-label={link.name}
                     >
                       <link.icon size={20} />

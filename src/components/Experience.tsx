@@ -147,16 +147,16 @@ const Experience = () => {
                     onMouseLeave={() => setHoveredIndex(null)}
                     className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 cursor-pointer"
                   >
-                    <div className={`w-3.5 h-3.5 rounded-full border-4 border-black ${accents.dot} shadow-lg ring-2 ${accents.ring} transition-transform duration-200 hover:scale-110`}>
+                    <div className={`w-6 h-6 rounded-full border-4 border-black ${accents.dot} shadow-lg ring-2 ${accents.ring} transition-transform duration-200 hover:scale-125`}>
                       {/* subtle glow handled by ring */}
                     </div>
                   </div>
 
                   {/* Label above/below */}
-                  <div className={`absolute left-1/2 -translate-x-1/2 ${isTop ? 'top-0 -translate-y-full pb-4' : 'bottom-0 translate-y-full pt-4'} text-center max-w-[200px]`}>
+                  <div className={`absolute left-1/2 -translate-x-1/2 ${isTop ? 'top-0 -translate-y-full pb-4' : 'bottom-0 translate-y-full pt-4'} text-center max-w-[220px]`}>
                     <div className="text-sm font-semibold text-zinc-400 mb-1">{monthYear}</div>
                     <div className="text-sm font-semibold text-gray-100 mb-1 line-clamp-1">{exp.company}</div>
-                    <div className="text-xs text-gray-300 line-clamp-2">{exp.title}</div>
+                    <div className="text-xs text-gray-300 line-clamp-2 break-words">{exp.title}</div>
                   </div>
                 </div>
               )
@@ -232,8 +232,8 @@ const Experience = () => {
           className="mt-20"
         >
           <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-gray-900 mb-4">Technical Skills</h3>
-            <p className="text-lg text-gray-600">Core technologies I use to build reliable, user-first products</p>
+            <h3 className="text-3xl font-bold text-gray-100 mb-4">Technical Skills</h3>
+            <p className="text-lg text-gray-300">Core technologies I use to build reliable, user-first products</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -251,7 +251,7 @@ const Experience = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="rounded-2xl p-[1px] bg-gradient-to-r from-primary-500 via-purple-500 to-pink-500 overflow-hidden"
+                className="rounded-2xl p-[1px] bg-zinc-800 hover:bg-gradient-to-r hover:from-primary-500 hover:via-purple-500 hover:to-pink-500 overflow-hidden transition-all duration-300"
               >
                 <div className="bg-zinc-900 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 h-full">
                   <h4 className="font-semibold text-gray-100 mb-4">{group.title}</h4>

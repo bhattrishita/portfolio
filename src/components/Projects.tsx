@@ -232,15 +232,16 @@ function Carousel({ projects }: { projects: Project[] }) {
     <div className="relative">
       <div className="overflow-hidden">
         <div
-          className={`flex flex-nowrap ${isTransitioning ? 'transition-transform duration-[600ms] ease-in-out' : ''}`}
+          className={`flex flex-nowrap items-stretch ${isTransitioning ? 'transition-transform duration-[600ms] ease-in-out' : ''}`}
           style={{ transform: `translateX(-${translateX}%)` }}
         >
           {infiniteProjects.map((project, index) => (
-            <div key={index} className="w-full md:w-1/3 flex-shrink-0 px-2">
-              <div className="relative bg-zinc-900 rounded-2xl shadow-lg overflow-hidden border border-zinc-800 group h-full">
-                <div className="p-5 space-y-3">
+            <div key={index} className="w-full md:w-1/3 flex-shrink-0 px-2 flex">
+              <div className="rounded-2xl p-[1px] bg-zinc-800 hover:bg-gradient-to-r hover:from-primary-500 hover:via-purple-500 hover:to-pink-500 overflow-hidden transition-all duration-300 group flex-1 flex flex-col">
+                <div className="relative bg-zinc-900 rounded-2xl shadow-lg overflow-hidden group flex-1 flex flex-col">
+                <div className="p-5 space-y-3 flex-1 flex flex-col">
                   <h3 className="text-xl font-bold text-gray-100">{project.title}</h3>
-                  <p className="text-sm text-gray-300 leading-relaxed">{project.description}</p>
+                  <p className="text-sm text-gray-300 leading-relaxed flex-1">{project.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {project.technologies.map((tech, techIndex) => (
                       <span key={techIndex} className="px-2.5 py-0.5 bg-zinc-800 text-gray-200 rounded-full text-xs font-medium hover:bg-primary-900/40 hover:text-primary-300 transition-colors duration-200">
@@ -262,6 +263,7 @@ function Carousel({ projects }: { projects: Project[] }) {
                     </a>
                   </div>
                 )}
+                </div>
               </div>
             </div>
           ))}

@@ -75,14 +75,16 @@ const Contact = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                className="flex items-center p-4 bg-zinc-900 border border-zinc-800 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 group"
+                  className="rounded-xl p-[1px] bg-zinc-800 hover:bg-gradient-to-r hover:from-primary-500 hover:via-purple-500 hover:to-pink-500 overflow-hidden transition-all duration-300 group"
                 >
-                <div className="flex-shrink-0 w-12 h-12 bg-zinc-800 rounded-lg flex items-center justify-center group-hover:bg-zinc-700 transition-colors duration-200">
-                  <info.icon size={24} className="text-primary-400" />
-                  </div>
-                  <div className="ml-4">
-                  <h4 className="font-semibold text-gray-100">{info.title}</h4>
-                  <p className="text-gray-300">{info.value}</p>
+                  <div className="flex items-center p-4 bg-zinc-900 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 h-full">
+                    <div className="flex-shrink-0 w-12 h-12 bg-zinc-800 rounded-lg flex items-center justify-center group-hover:bg-zinc-700 transition-colors duration-200">
+                      <info.icon size={24} className="text-primary-400" />
+                    </div>
+                    <div className="ml-4">
+                      <h4 className="font-semibold text-gray-100">{info.title}</h4>
+                      <p className="text-gray-300">{info.value}</p>
+                    </div>
                   </div>
                 </motion.a>
               ))}
@@ -101,10 +103,12 @@ const Contact = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                     viewport={{ once: true }}
-                  className={`w-12 h-12 bg-zinc-900 border border-zinc-800 rounded-lg flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 text-gray-200 ${link.color}`}
+                  className="w-12 h-12 rounded-lg p-[1px] bg-zinc-800 hover:bg-gradient-to-r hover:from-primary-500 hover:via-purple-500 hover:to-pink-500 overflow-hidden transition-all duration-300 group"
                     aria-label={link.name}
                   >
-                    <link.icon size={24} />
+                    <div className="w-full h-full bg-zinc-900 rounded-lg flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 text-gray-200 group-hover:text-primary-400">
+                      <link.icon size={24} />
+                    </div>
                   </motion.a>
                 ))}
               </div>
