@@ -72,7 +72,7 @@ const Hero = () => {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="text-base sm:text-lg text-gray-300 mb-8 sm:mb-12 max-w-2xl mx-auto lg:mx-0"
             >
-              also a software developer and AI enthusiast. I love building user-centric applications, solving real problems with clean engineering, and exploring how AI can power smarter, scalable solutions. I'm driven by curiosity and enjoy collaborating to turn complex challenges into elegant, impactful solutions.
+              also a software developer and AI enthusiast. I love building user-centric applications, solving real problems with clean engineering, and exploring how AI can power smarter, scalable solutions. I&apos;m driven by curiosity and enjoy collaborating to turn complex challenges into elegant, impactful solutions.
             </motion.p>
 
             {/* CTA Buttons */}

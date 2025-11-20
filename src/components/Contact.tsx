@@ -58,10 +58,10 @@ const Contact = () => {
           className="text-center mb-12 sm:mb-16"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-100 mb-3 sm:mb-4">
-            Let's Connect
+            Let&apos;s Connect
           </h2>
           <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto px-4">
-            I'm open to roles, collaborations, and interesting problems. Reach me directly via email or connect on LinkedIn.
+            I&apos;m open to roles, collaborations, and interesting problems. Reach me directly via email or connect on LinkedIn.
           </p>
         </motion.div>
         <div className="max-w-3xl mx-auto px-4">
