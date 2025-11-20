@@ -80,7 +80,7 @@ const Experience = () => {
     }
   }
 
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
 
   // Sort experiences by year (most recent first)
   const sortedExperiences = useMemo(() => {
@@ -140,18 +140,21 @@ const Experience = () => {
                   return (
                     <div key={index} className="relative pl-12">
                       {/* Timeline dot */}
-                      <div
-                        onClick={() => setHoveredIndex(index === hoveredIndex ? null : index)}
-                        className="absolute left-0 top-2 cursor-pointer touch-manipulation"
-                      >
-                        <div className={`w-8 h-8 rounded-full border-4 border-black ${accents.dot} shadow-lg ring-2 ${accents.ring} transition-transform duration-200 active:scale-110`} />
+                      <div className="absolute left-0 top-2">
+                        <div className={`w-8 h-8 rounded-full border-4 border-black ${accents.dot} shadow-lg ring-2 ${accents.ring}`} />
                       </div>
                       
                       {/* Content */}
-                      <div>
+                      <div className="hover:opacity-80 transition-opacity duration-200 text-left">
                         <div className="text-xs font-semibold text-zinc-400 mb-1">{monthYear}</div>
                         <div className="text-base font-bold text-gray-100 mb-1">{exp.company}</div>
-                        <div className="text-sm text-gray-300">{exp.title}</div>
+                        <div className="text-sm text-gray-300 mb-1">{exp.title}</div>
+                        <button
+                          onClick={() => setSelectedIndex(index)}
+                          className="text-xs text-white hover:text-gray-300 underline transition-colors duration-200"
+                        >
+                          view details
+                        </button>
                       </div>
                     </div>
                   )
@@ -172,25 +175,36 @@ const Experience = () => {
                 const accents = accentColors[index % accentColors.length]
                 
                 return (
-                  <div key={index} className="relative h-48">
+                  <div 
+                    key={index} 
+                    className="relative h-auto min-h-[200px]"
+                  >
                     {/* Connector line from rail to label */}
-                    <div className={`absolute left-1/2 w-px bg-zinc-700 ${isTop ? 'top-0 bottom-1/2' : 'top-1/2 bottom-0'}`} />
+                    <div className={`absolute left-1/2 w-px bg-zinc-700 ${isTop ? 'top-0 bottom-1/2' : 'top-1/2 bottom-0'} transition-colors duration-200`} />
 
                     {/* Timeline dot */}
-                    <div
-                      onMouseEnter={() => setHoveredIndex(index)}
-                      onMouseLeave={() => setHoveredIndex(null)}
-                      onClick={() => setHoveredIndex(index === hoveredIndex ? null : index)}
-                      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 cursor-pointer touch-manipulation"
+                    <div 
+                      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 cursor-pointer"
+                      onMouseEnter={() => setSelectedIndex(index)}
                     >
                       <div className={`w-6 h-6 rounded-full border-4 border-black ${accents.dot} shadow-lg ring-2 ${accents.ring} transition-transform duration-200 hover:scale-125`} />
                     </div>
 
-                    {/* Label above/below */}
-                    <div className={`absolute left-1/2 -translate-x-1/2 ${isTop ? 'top-0 -translate-y-full pb-4' : 'bottom-0 translate-y-full pt-4'} text-center max-w-[220px] px-2`}>
-                      <div className="text-sm font-semibold text-zinc-400 mb-1">{monthYear}</div>
-                      <div className="text-sm font-semibold text-gray-100 mb-1 break-words">{exp.company}</div>
-                      <div className="text-xs text-gray-300 break-words line-clamp-2">{exp.title}</div>
+                    {/* Label above/below - now with full content */}
+                    <div 
+                      className={`absolute left-1/2 -translate-x-1/2 ${isTop ? 'top-0 -translate-y-full pb-4' : 'bottom-0 translate-y-full pt-4'} w-full max-w-[280px] px-2`}
+                    >
+                      <div className="text-center">
+                        <div className="text-sm font-semibold text-zinc-400 mb-1">{monthYear}</div>
+                        <div className="text-sm font-semibold text-gray-100 mb-1 break-words">{exp.company}</div>
+                        <div className="text-xs text-gray-300 mb-1 break-words">{exp.title}</div>
+                        <button
+                          onClick={() => setSelectedIndex(index)}
+                          className="text-xs text-white hover:text-gray-300 underline transition-colors duration-200"
+                        >
+                          view details
+                        </button>
+                      </div>
                     </div>
                   </div>
                 )
@@ -199,15 +213,13 @@ const Experience = () => {
           </div>
 
           {/* Popup Modal */}
-          {hoveredIndex !== null && (
+          {selectedIndex !== null && (
         <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
-              onMouseEnter={() => setHoveredIndex(hoveredIndex)}
-              onMouseLeave={() => setHoveredIndex(null)}
-              onClick={() => setHoveredIndex(null)}
+              onClick={() => setSelectedIndex(null)}
             >
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -218,7 +230,7 @@ const Experience = () => {
                 onClick={(e) => e.stopPropagation()}
               >
                 <button
-                  onClick={() => setHoveredIndex(null)}
+                  onClick={() => setSelectedIndex(null)}
                   className="absolute top-4 right-4 w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center shadow-lg hover:bg-zinc-800 transition-colors duration-200 z-10"
                   aria-label="Close"
                 >
@@ -226,30 +238,30 @@ const Experience = () => {
                 </button>
                 <div className="p-4 sm:p-8">
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-4 pr-8 gap-2">
-                    <h3 className="text-xl sm:text-2xl font-bold text-gray-100">{sortedExperiences[hoveredIndex].title}</h3>
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium border ${getTypeColor(sortedExperiences[hoveredIndex].type)} whitespace-nowrap`}>
-                      {sortedExperiences[hoveredIndex].type.charAt(0).toUpperCase() + sortedExperiences[hoveredIndex].type.slice(1)}
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-100">{sortedExperiences[selectedIndex].title}</h3>
+                    <span className={`px-3 py-1 rounded-full text-sm font-medium border ${getTypeColor(sortedExperiences[selectedIndex].type)} whitespace-nowrap`}>
+                      {sortedExperiences[selectedIndex].type.charAt(0).toUpperCase() + sortedExperiences[selectedIndex].type.slice(1)}
                       </span>
                     </div>
                   <div className="flex items-center text-gray-300 mb-3">
                     <Building2 size={18} className="mr-2 text-primary-600 flex-shrink-0" />
-                    <span className="font-semibold break-words">{sortedExperiences[hoveredIndex].company}</span>
+                    <span className="font-semibold break-words">{sortedExperiences[selectedIndex].company}</span>
                   </div>
                   <div className="flex flex-col sm:flex-row sm:items-center text-gray-400 mb-6 gap-2">
                     <div className="flex items-center">
                       <MapPin size={16} className="mr-2 text-primary-500 flex-shrink-0" />
-                      <span className="mr-6">{sortedExperiences[hoveredIndex].location}</span>
+                      <span className="mr-6">{sortedExperiences[selectedIndex].location}</span>
                     </div>
                     <div className="flex items-center">
                       <Calendar size={16} className="mr-2 text-primary-500 flex-shrink-0" />
-                      <span>{sortedExperiences[hoveredIndex].period}</span>
+                      <span>{sortedExperiences[selectedIndex].period}</span>
                     </div>
                   </div>
-                  <p className="text-gray-300 mb-6 leading-relaxed">{sortedExperiences[hoveredIndex].description}</p>
+                  <p className="text-gray-300 mb-6 leading-relaxed">{sortedExperiences[selectedIndex].description}</p>
                   <div>
                     <h4 className="text-sm font-semibold text-gray-200 mb-3">Technologies:</h4>
                     <div className="flex flex-wrap gap-2">
-                      {sortedExperiences[hoveredIndex].technologies.map((tech, techIndex) => (
+                      {sortedExperiences[selectedIndex].technologies.map((tech, techIndex) => (
                         <span key={techIndex} className="px-3 py-1 bg-zinc-800 text-gray-200 rounded-full text-sm font-medium hover:bg-primary-900/40 hover:text-primary-300 transition-colors duration-200">
                           {tech}
                         </span>
@@ -268,7 +280,7 @@ const Experience = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
-          className="mt-20"
+          className="mt-32 sm:mt-40"
         >
           <div className="text-center mb-12">
             <h3 className="text-2xl sm:text-3xl font-bold text-gray-100 mb-4">Technical Skills</h3>
