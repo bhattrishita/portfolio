@@ -127,9 +127,9 @@ const Experience = () => {
         {/* Horizontal Timeline */}
         <div className="relative mx-auto max-w-6xl py-16">
           {/* Timeline rail centered */}
-          <div className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 h-[2px] bg-zinc-700 rounded-full" />
+          <div className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 h-[2px] bg-zinc-700 rounded-full hidden sm:block" />
 
-          <div className="relative grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {sortedExperiences.map((exp, index) => {
               const isTop = index % 2 === 0
               const year = exp.period.match(/\d{4}/)?.[0] || ''
@@ -137,26 +137,27 @@ const Experience = () => {
               const accents = accentColors[index % accentColors.length]
               
               return (
-                <div key={index} className="relative h-48">
+                <div key={index} className="relative h-auto sm:h-48">
                   {/* Connector line from rail to label */}
-                  <div className={`absolute left-1/2 w-px bg-zinc-700 ${isTop ? 'top-0 bottom-1/2' : 'top-1/2 bottom-0'}`} />
+                  <div className={`absolute left-1/2 w-px bg-zinc-700 hidden sm:block ${isTop ? 'top-0 bottom-1/2' : 'top-1/2 bottom-0'}`} />
 
                   {/* Timeline dot */}
                   <div
                     onMouseEnter={() => setHoveredIndex(index)}
                     onMouseLeave={() => setHoveredIndex(null)}
-                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 cursor-pointer"
+                    onClick={() => setHoveredIndex(index)}
+                    className="absolute left-1/2 top-1/2 sm:top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 cursor-pointer"
                   >
                     <div className={`w-6 h-6 rounded-full border-4 border-black ${accents.dot} shadow-lg ring-2 ${accents.ring} transition-transform duration-200 hover:scale-125`}>
                       {/* subtle glow handled by ring */}
                     </div>
                   </div>
 
-                  {/* Label above/below */}
-                  <div className={`absolute left-1/2 -translate-x-1/2 ${isTop ? 'top-0 -translate-y-full pb-4' : 'bottom-0 translate-y-full pt-4'} text-center max-w-[220px]`}>
+                  {/* Label above/below - mobile: always below with padding, desktop: alternate */}
+                  <div className={`absolute left-1/2 -translate-x-1/2 pt-12 sm:pt-0 ${isTop ? 'sm:top-0 sm:-translate-y-full sm:pb-4' : 'sm:bottom-0 sm:translate-y-full sm:pt-4'} text-center max-w-[280px] sm:max-w-[220px]`}>
                     <div className="text-sm font-semibold text-zinc-400 mb-1">{monthYear}</div>
-                    <div className="text-sm font-semibold text-gray-100 mb-1 line-clamp-1">{exp.company}</div>
-                    <div className="text-xs text-gray-300 line-clamp-2 break-words">{exp.title}</div>
+                    <div className="text-sm font-semibold text-gray-100 mb-1 break-words">{exp.company}</div>
+                    <div className="text-xs text-gray-300 sm:line-clamp-2 break-words">{exp.title}</div>
                   </div>
                 </div>
               )
@@ -184,27 +185,31 @@ const Experience = () => {
               >
                 <button
                   onClick={() => setHoveredIndex(null)}
-                  className="absolute top-4 right-4 w-10 h-10 rounded-full bg-zinc-900 border border-zinc-700 flex items-center justify-center shadow-lg hover:bg-zinc-800 transition-colors duration-200 z-10"
+                  className="absolute top-4 right-4 w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center shadow-lg hover:bg-zinc-800 transition-colors duration-200 z-10"
                   aria-label="Close"
                 >
                   <X size={18} className="text-gray-600" />
                 </button>
-                <div className="p-8">
-                  <div className="flex items-start justify-between mb-4 pr-8">
-                    <h3 className="text-2xl font-bold text-gray-100">{sortedExperiences[hoveredIndex].title}</h3>
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium border ${getTypeColor(sortedExperiences[hoveredIndex].type)} whitespace-nowrap ml-4`}>
+                <div className="p-4 sm:p-8">
+                  <div className="flex flex-col sm:flex-row items-start justify-between mb-4 pr-8 gap-2">
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-100">{sortedExperiences[hoveredIndex].title}</h3>
+                    <span className={`px-3 py-1 rounded-full text-sm font-medium border ${getTypeColor(sortedExperiences[hoveredIndex].type)} whitespace-nowrap`}>
                       {sortedExperiences[hoveredIndex].type.charAt(0).toUpperCase() + sortedExperiences[hoveredIndex].type.slice(1)}
                       </span>
                     </div>
                   <div className="flex items-center text-gray-300 mb-3">
-                    <Building2 size={18} className="mr-2 text-primary-600" />
-                    <span className="font-semibold">{sortedExperiences[hoveredIndex].company}</span>
+                    <Building2 size={18} className="mr-2 text-primary-600 flex-shrink-0" />
+                    <span className="font-semibold break-words">{sortedExperiences[hoveredIndex].company}</span>
                   </div>
-                  <div className="flex items-center text-gray-400 mb-6">
-                    <MapPin size={16} className="mr-2 text-primary-500" />
-                    <span className="mr-6">{sortedExperiences[hoveredIndex].location}</span>
-                    <Calendar size={16} className="mr-2 text-primary-500" />
-                    <span>{sortedExperiences[hoveredIndex].period}</span>
+                  <div className="flex flex-col sm:flex-row sm:items-center text-gray-400 mb-6 gap-2">
+                    <div className="flex items-center">
+                      <MapPin size={16} className="mr-2 text-primary-500 flex-shrink-0" />
+                      <span className="mr-6">{sortedExperiences[hoveredIndex].location}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <Calendar size={16} className="mr-2 text-primary-500 flex-shrink-0" />
+                      <span>{sortedExperiences[hoveredIndex].period}</span>
+                    </div>
                   </div>
                   <p className="text-gray-300 mb-6 leading-relaxed">{sortedExperiences[hoveredIndex].description}</p>
                   <div>
@@ -232,11 +237,11 @@ const Experience = () => {
           className="mt-20"
         >
           <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-gray-100 mb-4">Technical Skills</h3>
-            <p className="text-lg text-gray-300">Core technologies I use to build reliable, user-first products</p>
+            <h3 className="text-2xl sm:text-3xl font-bold text-gray-100 mb-4">Technical Skills</h3>
+            <p className="text-base sm:text-lg text-gray-300">Core technologies I use to build reliable, user-first products</p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               { title: 'Languages & Frameworks', items: ['Python', 'Java', 'C', 'C#', 'SQL', 'TypeScript', 'JavaScript', 'Angular', 'React (Next.js)', 'Node.js', 'Django', 'Spring Boot'] },
               { title: 'Backend, APIs & DevOps', items: ['REST & GraphQL APIs', 'Microservices', 'Docker', 'CI/CD', 'Kubernetes (K8s)'] },

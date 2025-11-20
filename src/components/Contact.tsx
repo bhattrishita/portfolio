@@ -55,18 +55,18 @@ const Contact = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-100 mb-4">
-            Let’s Connect
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-100 mb-3 sm:mb-4">
+            Let's Connect
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            I’m open to roles, collaborations, and interesting problems. Reach me directly via email or connect on LinkedIn.
+          <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto px-4">
+            I'm open to roles, collaborations, and interesting problems. Reach me directly via email or connect on LinkedIn.
           </p>
         </motion.div>
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-3xl mx-auto px-4">
             {/* Contact Info Cards */}
-          <div className="grid sm:grid-cols-2 gap-4 mb-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 sm:mb-10">
               {contactInfo.map((info, index) => (
                 <motion.a
                   key={index}
@@ -77,13 +77,13 @@ const Contact = () => {
                   viewport={{ once: true }}
                   className="rounded-xl p-[1px] bg-zinc-800 hover:bg-gradient-to-r hover:from-primary-500 hover:via-purple-500 hover:to-pink-500 overflow-hidden transition-all duration-300 group"
                 >
-                  <div className="flex items-center p-4 bg-zinc-900 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 h-full">
-                    <div className="flex-shrink-0 w-12 h-12 bg-zinc-800 rounded-lg flex items-center justify-center group-hover:bg-zinc-700 transition-colors duration-200">
-                      <info.icon size={24} className="text-primary-400" />
+                  <div className="flex items-center p-4 sm:p-5 bg-zinc-900 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 h-full">
+                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-zinc-800 rounded-lg flex items-center justify-center group-hover:bg-zinc-700 transition-colors duration-200">
+                      <info.icon size={20} className="sm:w-6 sm:h-6 text-primary-400" />
                     </div>
-                    <div className="ml-4">
-                      <h4 className="font-semibold text-gray-100">{info.title}</h4>
-                      <p className="text-gray-300">{info.value}</p>
+                    <div className="ml-3 sm:ml-4 min-w-0">
+                      <h4 className="font-semibold text-gray-100 text-sm sm:text-base">{info.title}</h4>
+                      <p className="text-gray-300 text-sm sm:text-base break-words">{info.value}</p>
                     </div>
                   </div>
                 </motion.a>
@@ -92,7 +92,7 @@ const Contact = () => {
 
             {/* Social Links */}
           <div className="text-center">
-            <div className="flex justify-center space-x-4">
+            <div className="flex justify-center space-x-3 sm:space-x-4">
                 {socialLinks.map((link, index) => (
                   <motion.a
                     key={index}
@@ -103,11 +103,11 @@ const Contact = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                     viewport={{ once: true }}
-                  className="w-12 h-12 rounded-lg p-[1px] bg-zinc-800 hover:bg-gradient-to-r hover:from-primary-500 hover:via-purple-500 hover:to-pink-500 overflow-hidden transition-all duration-300 group"
+                  className="w-11 h-11 sm:w-12 sm:h-12 rounded-lg p-[1px] bg-zinc-800 hover:bg-gradient-to-r hover:from-primary-500 hover:via-purple-500 hover:to-pink-500 overflow-hidden transition-all duration-300 group"
                     aria-label={link.name}
                   >
                     <div className="w-full h-full bg-zinc-900 rounded-lg flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 text-gray-200 group-hover:text-primary-400">
-                      <link.icon size={24} />
+                      <link.icon size={20} className="sm:w-6 sm:h-6" />
                     </div>
                   </motion.a>
                 ))}

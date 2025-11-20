@@ -165,32 +165,58 @@ type Project = {
 }
 
 function Carousel({ projects }: { projects: Project[] }) {
-  // For infinite scroll: prepend last 3 projects, append first 3 projects
-  const infiniteProjects = useMemo(() => {
-    if (projects.length <= 3) return projects
-    const lastThree = projects.slice(-3)
-    const firstThree = projects.slice(0, 3)
-    return [...lastThree, ...projects, ...firstThree]
-  }, [projects])
+  // Track screen size for responsive card display
+  const [cardsPerView, setCardsPerView] = useState(3)
 
-  const [currentIndex, setCurrentIndex] = useState(3) // Start at real first project (index 3, after the prepended last 3)
+  useEffect(() => {
+    const updateCardsPerView = () => {
+      if (window.innerWidth < 768) {
+        setCardsPerView(1) // Mobile: 1 card
+      } else if (window.innerWidth < 1024) {
+        setCardsPerView(2) // Tablet: 2 cards
+      } else {
+        setCardsPerView(3) // Desktop: 3 cards
+      }
+    }
+
+    updateCardsPerView()
+    window.addEventListener('resize', updateCardsPerView)
+    return () => window.removeEventListener('resize', updateCardsPerView)
+  }, [])
+
+  // For infinite scroll: prepend last N projects, append first N projects
+  const infiniteProjects = useMemo(() => {
+    if (projects.length <= cardsPerView) return projects
+    const lastN = projects.slice(-cardsPerView)
+    const firstN = projects.slice(0, cardsPerView)
+    return [...lastN, ...projects, ...firstN]
+  }, [projects, cardsPerView])
+
+  const [currentIndex, setCurrentIndex] = useState(cardsPerView) // Start at real first project
   const [isTransitioning, setIsTransitioning] = useState(true)
 
-  // Calculate how much to translate (each card is 33.333% width to show 3 at a time)
-  const translateX = (currentIndex * 100) / 3
+  // Reset currentIndex when cardsPerView changes
+  useEffect(() => {
+    setIsTransitioning(false)
+    setCurrentIndex(cardsPerView)
+    setTimeout(() => setIsTransitioning(true), 50)
+  }, [cardsPerView])
+
+  // Calculate how much to translate based on cards per view
+  const translateX = (currentIndex * 100) / cardsPerView
 
   const handleNext = () => {
-    if (projects.length <= 3) return
+    if (projects.length <= cardsPerView) return
     
     const nextIndex = currentIndex + 1
     
-    // If we're about to reach the appended first 3 projects, loop back
-    if (nextIndex >= infiniteProjects.length - 3) {
+    // If we're about to reach the appended first N projects, loop back
+    if (nextIndex >= infiniteProjects.length - cardsPerView) {
       setCurrentIndex(nextIndex)
-      // After transition, instantly jump to real first (index 3)
+      // After transition, instantly jump to real first
       setTimeout(() => {
         setIsTransitioning(false)
-        setCurrentIndex(3)
+        setCurrentIndex(cardsPerView)
         setTimeout(() => setIsTransitioning(true), 50)
       }, 600)
     } else {
@@ -199,17 +225,17 @@ function Carousel({ projects }: { projects: Project[] }) {
   }
 
   const handlePrev = () => {
-    if (projects.length <= 3) return
+    if (projects.length <= cardsPerView) return
     
     const prevIndex = currentIndex - 1
     
-    // If we're at the real first, jump to before the prepended last 3 (no transition)
-    if (prevIndex < 3) {
+    // If we're at the real first, jump to before the prepended last N (no transition)
+    if (prevIndex < cardsPerView) {
       setIsTransitioning(false)
-      setCurrentIndex(infiniteProjects.length - 6) // Position before prepended last 3
+      setCurrentIndex(infiniteProjects.length - cardsPerView * 2)
       setTimeout(() => {
         setIsTransitioning(true)
-        setCurrentIndex(infiniteProjects.length - 6)
+        setCurrentIndex(infiniteProjects.length - cardsPerView * 2)
       }, 50)
     } else {
       setCurrentIndex(prevIndex)
@@ -218,7 +244,7 @@ function Carousel({ projects }: { projects: Project[] }) {
 
   // Auto-advance every 10 seconds
   useEffect(() => {
-    if (projects.length <= 3) return
+    if (projects.length <= cardsPerView) return
     
     const interval = setInterval(() => {
       handleNext()
@@ -226,7 +252,7 @@ function Carousel({ projects }: { projects: Project[] }) {
 
     return () => clearInterval(interval)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentIndex])
+  }, [currentIndex, cardsPerView])
 
   return (
     <div className="relative">
@@ -236,7 +262,7 @@ function Carousel({ projects }: { projects: Project[] }) {
           style={{ transform: `translateX(-${translateX}%)` }}
         >
           {infiniteProjects.map((project, index) => (
-            <div key={index} className="w-full md:w-1/3 flex-shrink-0 px-2 flex">
+            <div key={index} className="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-2 flex">
               <div className="rounded-2xl p-[1px] bg-zinc-800 hover:bg-gradient-to-r hover:from-primary-500 hover:via-purple-500 hover:to-pink-500 overflow-hidden transition-all duration-300 group flex-1 flex flex-col">
                 <div className="relative bg-zinc-900 rounded-2xl shadow-lg overflow-hidden group flex-1 flex flex-col">
                 <div className="p-5 space-y-3 flex-1 flex flex-col">
@@ -269,18 +295,18 @@ function Carousel({ projects }: { projects: Project[] }) {
           ))}
         </div>
       </div>
-      {projects.length > 3 && (
+      {projects.length > cardsPerView && (
         <>
           <button 
             onClick={handlePrev} 
-            className="absolute -left-3 top-1/2 -translate-y-1/2 bg-zinc-900 border border-zinc-700 rounded-full w-10 h-10 shadow-lg hover:bg-zinc-800 hover:border-zinc-600 text-gray-300 hover:text-primary-400 flex items-center justify-center text-xl font-bold transition-colors duration-200 z-10"
+            className="absolute left-0 md:-left-3 top-1/2 -translate-y-1/2 bg-zinc-900 border border-zinc-700 rounded-full w-10 h-10 shadow-lg hover:bg-zinc-800 hover:border-zinc-600 text-gray-300 hover:text-primary-400 flex items-center justify-center text-xl font-bold transition-colors duration-200 z-10"
             aria-label="Previous"
           >
             ‹
           </button>
           <button 
             onClick={handleNext} 
-            className="absolute -right-3 top-1/2 -translate-y-1/2 bg-zinc-900 border border-zinc-700 rounded-full w-10 h-10 shadow-lg hover:bg-zinc-800 hover:border-zinc-600 text-gray-300 hover:text-primary-400 flex items-center justify-center text-xl font-bold transition-colors duration-200 z-10"
+            className="absolute right-0 md:-right-3 top-1/2 -translate-y-1/2 bg-zinc-900 border border-zinc-700 rounded-full w-10 h-10 shadow-lg hover:bg-zinc-800 hover:border-zinc-600 text-gray-300 hover:text-primary-400 flex items-center justify-center text-xl font-bold transition-colors duration-200 z-10"
             aria-label="Next"
           >
             ›
