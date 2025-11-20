@@ -114,54 +114,88 @@ const Experience = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16 px-4"
         >
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-100 mb-4">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-gray-100 mb-3 sm:mb-4">
             Experience
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-base sm:text-xl text-gray-300 max-w-3xl mx-auto">
             My professional journey in software development and academic pursuits
           </p>
         </motion.div>
 
-        {/* Horizontal Timeline */}
-        <div className="relative mx-auto max-w-6xl py-16">
-          {/* Timeline rail centered */}
-          <div className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 h-[2px] bg-zinc-700 rounded-full hidden sm:block" />
-
-          <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {sortedExperiences.map((exp, index) => {
-              const isTop = index % 2 === 0
-              const year = exp.period.match(/\d{4}/)?.[0] || ''
-              const monthYear = extractMonthYear(exp.period)
-              const accents = accentColors[index % accentColors.length]
+        {/* Timeline - Vertical on Mobile, Horizontal on Desktop */}
+        <div className="relative mx-auto max-w-6xl py-8 sm:py-16">
+          {/* Mobile: Vertical Timeline */}
+          <div className="block sm:hidden px-4">
+            <div className="relative">
+              {/* Vertical line */}
+              <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-zinc-700" />
               
-              return (
-                <div key={index} className="relative h-auto sm:h-48">
-                  {/* Connector line from rail to label */}
-                  <div className={`absolute left-1/2 w-px bg-zinc-700 hidden sm:block ${isTop ? 'top-0 bottom-1/2' : 'top-1/2 bottom-0'}`} />
+              <div className="space-y-8">
+                {sortedExperiences.map((exp, index) => {
+                  const monthYear = extractMonthYear(exp.period)
+                  const accents = accentColors[index % accentColors.length]
+                  
+                  return (
+                    <div key={index} className="relative pl-12">
+                      {/* Timeline dot */}
+                      <div
+                        onClick={() => setHoveredIndex(index === hoveredIndex ? null : index)}
+                        className="absolute left-0 top-2 cursor-pointer touch-manipulation"
+                      >
+                        <div className={`w-8 h-8 rounded-full border-4 border-black ${accents.dot} shadow-lg ring-2 ${accents.ring} transition-transform duration-200 active:scale-110`} />
+                      </div>
+                      
+                      {/* Content */}
+                      <div>
+                        <div className="text-xs font-semibold text-zinc-400 mb-1">{monthYear}</div>
+                        <div className="text-base font-bold text-gray-100 mb-1">{exp.company}</div>
+                        <div className="text-sm text-gray-300">{exp.title}</div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
 
-                  {/* Timeline dot */}
-                  <div
-                    onMouseEnter={() => setHoveredIndex(index)}
-                    onMouseLeave={() => setHoveredIndex(null)}
-                    onClick={() => setHoveredIndex(index)}
-                    className="absolute left-1/2 top-1/2 sm:top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 cursor-pointer"
-                  >
-                    <div className={`w-6 h-6 rounded-full border-4 border-black ${accents.dot} shadow-lg ring-2 ${accents.ring} transition-transform duration-200 hover:scale-125`}>
-                      {/* subtle glow handled by ring */}
+          {/* Desktop: Horizontal Timeline */}
+          <div className="hidden sm:block">
+            {/* Timeline rail centered */}
+            <div className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 h-[2px] bg-zinc-700 rounded-full" />
+
+            <div className="relative grid grid-cols-2 lg:grid-cols-4 gap-8">
+              {sortedExperiences.map((exp, index) => {
+                const isTop = index % 2 === 0
+                const monthYear = extractMonthYear(exp.period)
+                const accents = accentColors[index % accentColors.length]
+                
+                return (
+                  <div key={index} className="relative h-48">
+                    {/* Connector line from rail to label */}
+                    <div className={`absolute left-1/2 w-px bg-zinc-700 ${isTop ? 'top-0 bottom-1/2' : 'top-1/2 bottom-0'}`} />
+
+                    {/* Timeline dot */}
+                    <div
+                      onMouseEnter={() => setHoveredIndex(index)}
+                      onMouseLeave={() => setHoveredIndex(null)}
+                      onClick={() => setHoveredIndex(index === hoveredIndex ? null : index)}
+                      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 cursor-pointer touch-manipulation"
+                    >
+                      <div className={`w-6 h-6 rounded-full border-4 border-black ${accents.dot} shadow-lg ring-2 ${accents.ring} transition-transform duration-200 hover:scale-125`} />
+                    </div>
+
+                    {/* Label above/below */}
+                    <div className={`absolute left-1/2 -translate-x-1/2 ${isTop ? 'top-0 -translate-y-full pb-4' : 'bottom-0 translate-y-full pt-4'} text-center max-w-[220px] px-2`}>
+                      <div className="text-sm font-semibold text-zinc-400 mb-1">{monthYear}</div>
+                      <div className="text-sm font-semibold text-gray-100 mb-1 break-words">{exp.company}</div>
+                      <div className="text-xs text-gray-300 break-words line-clamp-2">{exp.title}</div>
                     </div>
                   </div>
-
-                  {/* Label above/below - mobile: always below with padding, desktop: alternate */}
-                  <div className={`absolute left-1/2 -translate-x-1/2 pt-12 sm:pt-0 ${isTop ? 'sm:top-0 sm:-translate-y-full sm:pb-4' : 'sm:bottom-0 sm:translate-y-full sm:pt-4'} text-center max-w-[280px] sm:max-w-[220px]`}>
-                    <div className="text-sm font-semibold text-zinc-400 mb-1">{monthYear}</div>
-                    <div className="text-sm font-semibold text-gray-100 mb-1 break-words">{exp.company}</div>
-                    <div className="text-xs text-gray-300 sm:line-clamp-2 break-words">{exp.title}</div>
-                  </div>
-                </div>
-              )
-            })}
+                )
+              })}
+            </div>
           </div>
 
           {/* Popup Modal */}
@@ -170,7 +204,7 @@ const Experience = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
               onMouseEnter={() => setHoveredIndex(hoveredIndex)}
               onMouseLeave={() => setHoveredIndex(null)}
               onClick={() => setHoveredIndex(null)}
@@ -180,7 +214,7 @@ const Experience = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
                 transition={{ duration: 0.3 }}
-                className="relative bg-zinc-900 max-w-3xl w-full mx-4 rounded-2xl shadow-2xl border border-zinc-800 max-h-[85vh] overflow-y-auto"
+                className="relative bg-zinc-900 max-w-3xl w-full rounded-2xl shadow-2xl border border-zinc-800 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto"
                 onClick={(e) => e.stopPropagation()}
               >
                 <button
@@ -241,36 +275,7 @@ const Experience = () => {
             <p className="text-base sm:text-lg text-gray-300">Core technologies I use to build reliable, user-first products</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { title: 'Languages & Frameworks', items: ['Python', 'Java', 'C', 'C#', 'SQL', 'TypeScript', 'JavaScript', 'Angular', 'React (Next.js)', 'Node.js', 'Django', 'Spring Boot'] },
-              { title: 'Backend, APIs & DevOps', items: ['REST & GraphQL APIs', 'Microservices', 'Docker', 'CI/CD', 'Kubernetes (K8s)'] },
-              { title: 'Databases & Cloud', items: ['MongoDB', 'PostgreSQL', 'MySQL', 'Oracle', 'Couchbase', 'AWS (S3)'] },
-              { title: 'AI/ML & Data', items: ['scikit-learn', 'Pandas', 'NumPy', 'SentenceTransformers', 'RapidFuzz', 'Regex', 'Streamlit'] },
-              { title: 'Frontend & UI', items: ['HTML', 'CSS', 'Bootstrap', 'Tailwind CSS', 'jQuery', 'Material UI', 'Responsive Web'] },
-              { title: 'Tools & Practices', items: ['Git/GitHub', 'Jira', 'Figma', 'Agile/Scrum', 'Testing & TDD'] }
-            ].map((group, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="rounded-2xl p-[1px] bg-zinc-800 hover:bg-gradient-to-r hover:from-primary-500 hover:via-purple-500 hover:to-pink-500 overflow-hidden transition-all duration-300"
-              >
-                <div className="bg-zinc-900 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 h-full">
-                  <h4 className="font-semibold text-gray-100 mb-4">{group.title}</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {group.items.map((item, i) => (
-                      <span key={i} className="px-3 py-1 bg-zinc-800 text-gray-200 rounded-full text-sm font-medium hover:bg-primary-900/40 hover:text-primary-300 transition-colors duration-200">
-                        {item}
-                      </span>
-                    ))}
-                    </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          <SkillsCarousel />
         </motion.div>
       </div>
     </section>
@@ -278,3 +283,117 @@ const Experience = () => {
 }
 
 export default Experience
+
+// Skills Carousel Component
+function SkillsCarousel() {
+  const [currentIndex, setCurrentIndex] = useState(0)
+
+  const skillGroups = [
+    { title: 'Languages & Frameworks', items: ['Python', 'Java', 'C', 'C#', 'SQL', 'TypeScript', 'JavaScript', 'Angular', 'React (Next.js)', 'Node.js', 'Django', 'Spring Boot'] },
+    { title: 'Backend, APIs & DevOps', items: ['REST & GraphQL APIs', 'Microservices', 'Docker', 'CI/CD', 'Kubernetes (K8s)'] },
+    { title: 'Databases & Cloud', items: ['MongoDB', 'PostgreSQL', 'MySQL', 'Oracle', 'Couchbase', 'AWS (S3)'] },
+    { title: 'AI/ML & Data', items: ['scikit-learn', 'Pandas', 'NumPy', 'SentenceTransformers', 'RapidFuzz', 'Regex', 'Streamlit'] },
+    { title: 'Frontend & UI', items: ['HTML', 'CSS', 'Bootstrap', 'Tailwind CSS', 'jQuery', 'Material UI', 'Responsive Web'] },
+    { title: 'Tools & Practices', items: ['Git/GitHub', 'Jira', 'Figma', 'Agile/Scrum', 'Testing & TDD'] }
+  ]
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % skillGroups.length)
+  }
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + skillGroups.length) % skillGroups.length)
+  }
+
+  return (
+    <>
+      {/* Mobile: Carousel */}
+      <div className="block md:hidden relative px-4">
+        <div className="overflow-hidden">
+          <div
+            className={`flex transition-transform duration-500 ease-in-out`}
+            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+          >
+            {skillGroups.map((group, index) => (
+              <div key={index} className="w-full flex-shrink-0 px-2">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  viewport={{ once: true }}
+                  className="rounded-2xl p-[1px] bg-zinc-800 hover:bg-gradient-to-r hover:from-primary-500 hover:via-purple-500 hover:to-pink-500 overflow-hidden transition-all duration-300"
+                >
+                  <div className="bg-zinc-900 rounded-2xl p-6 shadow-lg h-full min-h-[280px]">
+                    <h4 className="font-semibold text-gray-100 mb-4 text-lg">{group.title}</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {group.items.map((item, i) => (
+                        <span key={i} className="px-3 py-1 bg-zinc-800 text-gray-200 rounded-full text-sm font-medium">
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        {/* Navigation buttons */}
+        <button 
+          onClick={handlePrev} 
+          className="absolute left-0 top-1/2 -translate-y-1/2 bg-zinc-900 border border-zinc-700 rounded-full w-10 h-10 shadow-lg hover:bg-zinc-800 active:bg-zinc-700 text-gray-300 flex items-center justify-center text-xl font-bold transition-colors duration-200 z-10 touch-manipulation"
+          aria-label="Previous"
+        >
+          ‹
+        </button>
+        <button 
+          onClick={handleNext} 
+          className="absolute right-0 top-1/2 -translate-y-1/2 bg-zinc-900 border border-zinc-700 rounded-full w-10 h-10 shadow-lg hover:bg-zinc-800 active:bg-zinc-700 text-gray-300 flex items-center justify-center text-xl font-bold transition-colors duration-200 z-10 touch-manipulation"
+          aria-label="Next"
+        >
+          ›
+        </button>
+
+        {/* Dots indicator */}
+        <div className="flex justify-center gap-2 mt-6">
+          {skillGroups.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                index === currentIndex ? 'bg-primary-400 w-6' : 'bg-zinc-600'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop: Grid */}
+      <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-6">
+        {skillGroups.map((group, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+            viewport={{ once: true }}
+            className="rounded-2xl p-[1px] bg-zinc-800 hover:bg-gradient-to-r hover:from-primary-500 hover:via-purple-500 hover:to-pink-500 overflow-hidden transition-all duration-300"
+          >
+            <div className="bg-zinc-900 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 h-full">
+              <h4 className="font-semibold text-gray-100 mb-4">{group.title}</h4>
+              <div className="flex flex-wrap gap-2">
+                {group.items.map((item, i) => (
+                  <span key={i} className="px-3 py-1 bg-zinc-800 text-gray-200 rounded-full text-sm font-medium hover:bg-primary-900/40 hover:text-primary-300 transition-colors duration-200">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </>
+  )
+}

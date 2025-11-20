@@ -127,12 +127,12 @@ const Projects = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-10"
+          className="text-center mb-8 sm:mb-10 px-4"
         >
-          <h2 className="text-3xl lg:text-4xl font-bold text-gray-100 mb-3">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-100 mb-3">
             Featured Projects
           </h2>
-          <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-300 max-w-3xl mx-auto">
             A showcase of my recent work and personal projects that demonstrate my skills and passion for development
           </p>
         </motion.div>
@@ -268,17 +268,29 @@ function Carousel({ projects }: { projects: Project[] }) {
                 <div className="p-5 space-y-3 flex-1 flex flex-col">
                   <h3 className="text-xl font-bold text-gray-100">{project.title}</h3>
                   <p className="text-sm text-gray-300 leading-relaxed flex-1">{project.description}</p>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 mb-3">
                     {project.technologies.map((tech, techIndex) => (
                       <span key={techIndex} className="px-2.5 py-0.5 bg-zinc-800 text-gray-200 rounded-full text-xs font-medium hover:bg-primary-900/40 hover:text-primary-300 transition-colors duration-200">
                         {tech}
                       </span>
                     ))}
                   </div>
+                  {/* GitHub Link Button - Always visible on mobile, overlay on desktop */}
+                  {project.github && (
+                    <a 
+                      href={project.github} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="md:hidden inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-gray-200 transition-all duration-200 shadow-sm text-sm font-medium"
+                    >
+                      <Github size={18} />
+                      View on GitHub
+                    </a>
+                  )}
                 </div>
-                {/* GitHub Link Overlay on Hover */}
+                {/* GitHub Link Overlay on Hover - Desktop only */}
                 {project.github && (
-                  <div className="absolute inset-0 bg-black/20 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded-2xl">
+                  <div className="hidden md:flex absolute inset-0 bg-black/20 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center rounded-2xl">
                     <a 
                       href={project.github} 
                       target="_blank" 
@@ -299,14 +311,14 @@ function Carousel({ projects }: { projects: Project[] }) {
         <>
           <button 
             onClick={handlePrev} 
-            className="absolute left-0 md:-left-3 top-1/2 -translate-y-1/2 bg-zinc-900 border border-zinc-700 rounded-full w-10 h-10 shadow-lg hover:bg-zinc-800 hover:border-zinc-600 text-gray-300 hover:text-primary-400 flex items-center justify-center text-xl font-bold transition-colors duration-200 z-10"
+            className="absolute left-2 md:-left-3 top-1/2 -translate-y-1/2 bg-zinc-900 border border-zinc-700 rounded-full w-12 h-12 md:w-10 md:h-10 shadow-lg hover:bg-zinc-800 hover:border-zinc-600 active:bg-zinc-700 text-gray-300 hover:text-primary-400 flex items-center justify-center text-2xl md:text-xl font-bold transition-colors duration-200 z-10 touch-manipulation"
             aria-label="Previous"
           >
             ‹
           </button>
           <button 
             onClick={handleNext} 
-            className="absolute right-0 md:-right-3 top-1/2 -translate-y-1/2 bg-zinc-900 border border-zinc-700 rounded-full w-10 h-10 shadow-lg hover:bg-zinc-800 hover:border-zinc-600 text-gray-300 hover:text-primary-400 flex items-center justify-center text-xl font-bold transition-colors duration-200 z-10"
+            className="absolute right-2 md:-right-3 top-1/2 -translate-y-1/2 bg-zinc-900 border border-zinc-700 rounded-full w-12 h-12 md:w-10 md:h-10 shadow-lg hover:bg-zinc-800 hover:border-zinc-600 active:bg-zinc-700 text-gray-300 hover:text-primary-400 flex items-center justify-center text-2xl md:text-xl font-bold transition-colors duration-200 z-10 touch-manipulation"
             aria-label="Next"
           >
             ›
