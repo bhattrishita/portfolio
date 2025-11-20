@@ -34,7 +34,7 @@ const Experience = () => {
       type: 'internship'
     },
     {
-      title: 'Developer Volunteer',
+      title: 'Software Developer',
       company: 'Frugal Innovation Hub - Santa Clara University',
       location: 'Santa Clara, CA',
       period: 'September 2024 – Present',
@@ -239,9 +239,11 @@ const Experience = () => {
                 <div className="p-4 sm:p-8">
                   <div className="flex flex-col sm:flex-row items-start justify-between mb-4 pr-8 gap-2">
                     <h3 className="text-xl sm:text-2xl font-bold text-gray-100">{sortedExperiences[selectedIndex].title}</h3>
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium border ${getTypeColor(sortedExperiences[selectedIndex].type)} whitespace-nowrap`}>
-                      {sortedExperiences[selectedIndex].type.charAt(0).toUpperCase() + sortedExperiences[selectedIndex].type.slice(1)}
+                    {sortedExperiences[selectedIndex].type !== 'volunteer' && (
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium border ${getTypeColor(sortedExperiences[selectedIndex].type)} whitespace-nowrap`}>
+                        {sortedExperiences[selectedIndex].type.charAt(0).toUpperCase() + sortedExperiences[selectedIndex].type.slice(1)}
                       </span>
+                    )}
                     </div>
                   <div className="flex items-center text-gray-300 mb-3">
                     <Building2 size={18} className="mr-2 text-primary-600 flex-shrink-0" />
