@@ -10,8 +10,8 @@ const Experience = () => {
       title: 'AI/ML Intern (Software Developer)',
       company: 'SNAP Life Sciences',
       location: 'Remote',
-      period: 'July 2025 – Present',
-      description: 'Spearhead microservices-based APIs with Node.js and Spring Boot, integrating Couchbase authentication and role-based access control to achieve 99.99% authentication success and stronger data security. Pioneer machine learning models in Python to predict drug net pricing, applying cleaning and feature engineering to boost accuracy by 5% and enhance scalability. Build and containerize React and Streamlit dashboards with Docker, ensuring reproducible deployments and faster insights for technical and business teams.',
+      period: 'July 2025 – December 2025',
+      description: 'Spearheaded microservices-based APIs with Node.js and Spring Boot, integrated Couchbase authentication and role-based access control to achieve 99.99% authentication success and stronger data security. Pioneered machine learning models in Python to predict drug net pricing, applied cleaning and feature engineering to boost accuracy by 5% and enhance scalability. Built and containerized React and Streamlit dashboards with Docker, ensured reproducible deployments and faster insights for technical and business teams.',
       technologies: ['Node.js', 'Spring Boot', 'Python', 'Couchbase', 'Docker', 'React', 'Streamlit', 'Machine Learning', 'AWS'],
       type: 'internship'
     },
