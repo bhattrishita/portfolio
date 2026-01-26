@@ -4,45 +4,46 @@ import { motion } from 'framer-motion'
 import { Calendar, MapPin, Building2, X } from 'lucide-react'
 import { useState, useMemo } from 'react'
 
+const experiences = [
+  {
+    title: 'AI/ML Intern (Software Developer)',
+    company: 'SNAP Life Sciences',
+    location: 'Remote',
+    period: 'July 2025 – December 2025',
+    description: 'Spearheaded microservices-based APIs with Node.js and Spring Boot, integrated Couchbase authentication and role-based access control to achieve 99.99% authentication success and stronger data security. Pioneered machine learning models in Python to predict drug net pricing, applied cleaning and feature engineering to boost accuracy by 5% and enhance scalability. Built and containerized React and Streamlit dashboards with Docker, ensured reproducible deployments and faster insights for technical and business teams.',
+    technologies: ['Node.js', 'Spring Boot', 'Python', 'Couchbase', 'Docker', 'React', 'Streamlit', 'Machine Learning', 'AWS'],
+    type: 'internship'
+  },
+  {
+    title: 'Fullstack Engineer',
+    company: 'Minimal Dot',
+    location: 'India',
+    period: 'May 2023 – June 2024',
+    description: 'Designed and developed a real-time task tracking system for a project management tool using Angular, TypeScript, and RESTful API, implementing custom sunburst and Kanban charts with data visualization logic written from scratch, improving task visibility for 50+ active users. Implemented secure document storage with AWS S3, enabling version-controlled uploads of up to 100 files per batch and improving collaboration for distributed teams. Applied strong problem-solving skills while conducting unit and integration tests and establishing a CI/CD pipeline, reducing deployment failures by 25% and improving release scalability.',
+    technologies: ['Angular', 'TypeScript', 'RESTful APIs', 'AWS S3', 'CI/CD', 'Unit Testing', 'Integration Testing', 'Data Visualization'],
+    type: 'fulltime'
+  },
+  {
+    title: 'Software Engineering Intern',
+    company: 'Dots & Coms',
+    location: 'India',
+    period: 'January 2022 – April 2022',
+    description: 'Developed high-performance, responsive web interfaces using HTML/CSS, Bootstrap, and jQuery, improving page load times by 20% and boosting engagement across mobile and desktop. Implemented authentication and session management for an e-commerce platform with NodeJS, MongoDB, and Auth0, reducing login-related drop-offs by 25%. Contributed to Agile sprints, delivering 10+ full-stack features while optimizing back-end queries to cut API response times by 15%.',
+    technologies: ['HTML/CSS', 'Bootstrap', 'jQuery', 'Node.js', 'MongoDB', 'Auth0', 'Agile', 'E-commerce'],
+    type: 'internship'
+  },
+  {
+    title: 'Software Developer',
+    company: 'Frugal Innovation Hub - Santa Clara University',
+    location: 'Santa Clara, CA',
+    period: 'September 2024 – Present',
+    description: 'Working on projects that help new employees access necessary details about company projects and ongoing initiatives. Built tools using Next.js, MongoDB, and Tailwind CSS to streamline onboarding processes. Developed bug-tracking features with Node.js and MongoDB for efficient project management and team transparency.',
+    technologies: ['Next.js', 'MongoDB', 'Tailwind CSS', 'Node.js', 'Project Management', 'Bug Tracking'],
+    type: 'volunteer'
+  }
+]
+
 const Experience = () => {
-  const experiences = [
-    {
-      title: 'AI/ML Intern (Software Developer)',
-      company: 'SNAP Life Sciences',
-      location: 'Remote',
-      period: 'July 2025 – December 2025',
-      description: 'Spearheaded microservices-based APIs with Node.js and Spring Boot, integrated Couchbase authentication and role-based access control to achieve 99.99% authentication success and stronger data security. Pioneered machine learning models in Python to predict drug net pricing, applied cleaning and feature engineering to boost accuracy by 5% and enhance scalability. Built and containerized React and Streamlit dashboards with Docker, ensured reproducible deployments and faster insights for technical and business teams.',
-      technologies: ['Node.js', 'Spring Boot', 'Python', 'Couchbase', 'Docker', 'React', 'Streamlit', 'Machine Learning', 'AWS'],
-      type: 'internship'
-    },
-    {
-      title: 'Fullstack Engineer',
-      company: 'Minimal Dot',
-      location: 'India',
-      period: 'May 2023 – June 2024',
-      description: 'Designed and developed a real-time task tracking system for a project management tool using Angular, TypeScript, and RESTful API, implementing custom sunburst and Kanban charts with data visualization logic written from scratch, improving task visibility for 50+ active users. Implemented secure document storage with AWS S3, enabling version-controlled uploads of up to 100 files per batch and improving collaboration for distributed teams. Applied strong problem-solving skills while conducting unit and integration tests and establishing a CI/CD pipeline, reducing deployment failures by 25% and improving release scalability.',
-      technologies: ['Angular', 'TypeScript', 'RESTful APIs', 'AWS S3', 'CI/CD', 'Unit Testing', 'Integration Testing', 'Data Visualization'],
-      type: 'fulltime'
-    },
-    {
-      title: 'Software Engineering Intern',
-      company: 'Dots & Coms',
-      location: 'India',
-      period: 'January 2022 – April 2022',
-      description: 'Developed high-performance, responsive web interfaces using HTML/CSS, Bootstrap, and jQuery, improving page load times by 20% and boosting engagement across mobile and desktop. Implemented authentication and session management for an e-commerce platform with NodeJS, MongoDB, and Auth0, reducing login-related drop-offs by 25%. Contributed to Agile sprints, delivering 10+ full-stack features while optimizing back-end queries to cut API response times by 15%.',
-      technologies: ['HTML/CSS', 'Bootstrap', 'jQuery', 'Node.js', 'MongoDB', 'Auth0', 'Agile', 'E-commerce'],
-      type: 'internship'
-    },
-    {
-      title: 'Software Developer',
-      company: 'Frugal Innovation Hub - Santa Clara University',
-      location: 'Santa Clara, CA',
-      period: 'September 2024 – Present',
-      description: 'Working on projects that help new employees access necessary details about company projects and ongoing initiatives. Built tools using Next.js, MongoDB, and Tailwind CSS to streamline onboarding processes. Developed bug-tracking features with Node.js and MongoDB for efficient project management and team transparency.',
-      technologies: ['Next.js', 'MongoDB', 'Tailwind CSS', 'Node.js', 'Project Management', 'Bug Tracking'],
-      type: 'volunteer'
-    }
-  ]
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -90,7 +91,7 @@ const Experience = () => {
       return { ...e, __year: year }
     })
     return withYear.sort((a, b) => b.__year - a.__year)
-  }, [experiences])
+  }, [])
 
   // Accent colors for timeline dots (dark-theme friendly)
   const accentColors = [

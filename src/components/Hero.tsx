@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { ChevronDown, Github, Linkedin, Mail } from 'lucide-react'
+import Image from 'next/image'
 import { scrollToSection } from '@/lib/utils'
 
 const Hero = () => {
@@ -50,7 +51,13 @@ const Hero = () => {
               <div className="w-56 h-56 sm:w-80 sm:h-80 lg:w-96 lg:h-96 relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-zinc-700 to-zinc-800 rounded-[20px] sm:rounded-[32px] blur-2xl opacity-20" />
                 <div className="relative w-full h-full bg-zinc-900 rounded-[20px] sm:rounded-[32px] p-2 shadow-2xl overflow-hidden">
-                  <img src="/profile.png" alt="Rishita Bhatt" className="w-full h-full object-cover rounded-[16px] sm:rounded-[24px]" />
+                  <Image 
+                    src="/profile.png" 
+                    alt="Rishita Bhatt" 
+                    width={384}
+                    height={384}
+                    className="w-full h-full object-cover rounded-[16px] sm:rounded-[24px]" 
+                  />
                 </div>
               </div>
             </div>
