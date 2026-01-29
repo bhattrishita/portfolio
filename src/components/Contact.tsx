@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Mail, Phone, MapPin, Github, Linkedin, FileText } from 'lucide-react'
+import { Mail, MapPin, Github, Linkedin, FileText } from 'lucide-react'
 
 const Contact = () => {
 
@@ -17,12 +17,6 @@ const Contact = () => {
       title: 'Location',
       value: 'Santa Clara, CA',
       href: '#'
-    },
-    {
-      icon: Phone,
-      title: 'Phone',
-      value: '+1 (555) 123-4567',
-      href: 'tel:+15551234567'
     }
   ]
 
