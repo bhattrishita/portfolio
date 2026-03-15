@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Mail, MapPin, Github, Linkedin, FileText } from 'lucide-react'
+import { Mail, Phone, Github, Linkedin, FileText } from 'lucide-react'
 
 const Contact = () => {
 
@@ -13,10 +13,10 @@ const Contact = () => {
       href: 'mailto:rishitabhatt18@gmail.com'
     },
     {
-      icon: MapPin,
-      title: 'Location',
-      value: 'Santa Clara, CA',
-      href: '#'
+      icon: Phone,
+      title: 'Phone',
+      value: '+1 (650) 515-9251',
+      href: 'tel:16505159251'
     }
   ]
 
